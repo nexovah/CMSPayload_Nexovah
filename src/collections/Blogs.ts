@@ -72,7 +72,6 @@ export const Blogs: CollectionConfig = {
                     {
                       slug: 'heading',
                       labels: { singular: 'Subheading', plural: 'Subheadings' },
-                      admin: { description: 'A smaller in-body heading (H3) — for breaking up a long section without starting a new ToC entry.' },
                       fields: [{ name: 'text', type: 'text', required: true }],
                     },
                     {
@@ -86,7 +85,6 @@ export const Blogs: CollectionConfig = {
                     {
                       slug: 'video',
                       labels: { singular: 'Video Embed', plural: 'Video Embeds' },
-                      admin: { description: 'Paste a YouTube or Vimeo URL.' },
                       fields: [
                         { name: 'url', type: 'text', required: true },
                         { name: 'caption', type: 'text' },
@@ -117,7 +115,6 @@ export const Blogs: CollectionConfig = {
                     {
                       slug: 'table',
                       labels: { singular: 'Table', plural: 'Tables' },
-                      admin: { description: 'Renders a hoverable comparison table.' },
                       fields: [
                         {
                           name: 'headers',
@@ -145,7 +142,6 @@ export const Blogs: CollectionConfig = {
                     {
                       slug: 'callout',
                       labels: { singular: 'Callout / Note', plural: 'Callouts' },
-                      admin: { description: 'A highlighted note/tip/warning box, styled like the Key Takeaways card.' },
                       fields: [
                         { name: 'text', type: 'textarea', required: true },
                         {

@@ -1,7 +1,6 @@
-import type { Field } from 'payload'
+import type { Tab } from 'payload'
 
-export const seoTab: Field = {
-  type: 'tab',
+export const seoTab: Tab = {
   label: 'SEO',
   fields: [
     { name: 'metaTitle', type: 'text', admin: { description: '50-60 characters' } },

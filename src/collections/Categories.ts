@@ -7,10 +7,10 @@ import type { CollectionConfig } from 'payload'
 export const Categories: CollectionConfig = {
   slug: 'categories',
   labels: { singular: 'Category', plural: 'Categories' },
+  defaultSort: 'order',
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['order', 'name', 'updatedAt'],
-    defaultSort: 'order',
   },
   access: {
     read: () => true,

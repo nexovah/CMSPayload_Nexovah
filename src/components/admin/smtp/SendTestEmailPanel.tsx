@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import type { ChangeEvent } from 'react'
 import { Button, TextInput, toast } from '@payloadcms/ui'
 
 // Placeholder — real test-email sending isn't wired up yet. Once nodemailer
@@ -26,7 +27,7 @@ export function SendTestEmailPanel() {
             path="smtpTestEmail"
             label="To e-mail"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             placeholder="email@site.com"
           />
         </div>
