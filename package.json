@@ -1,0 +1,35 @@
+{
+  "name": "nexovah-payload-cms",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3456",
+    "build": "next build",
+    "start": "next start --port 3456",
+    "generate:types": "payload generate:types",
+    "payload": "payload"
+  },
+  "dependencies": {
+    "@payloadcms/db-sqlite": "^3.86.0",
+    "@payloadcms/next": "^3.86.0",
+    "@payloadcms/richtext-lexical": "^3.86.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
+    "graphql": "^16.14.2",
+    "next": "^16.2.12",
+    "nodemailer": "^9.0.5",
+    "payload": "^3.86.0",
+    "react": "^19.2.8",
+    "react-colorful": "^5.8.0",
+    "react-dom": "^19.2.8",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@types/nodemailer": "^8.0.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

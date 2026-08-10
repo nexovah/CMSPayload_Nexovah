@@ -1,0 +1,55 @@
+/* Restyles the built-in Tabs field into a left-hand vertical sidebar menu —
+   scoped to the "Settings" global's OUTER tabs only (via the
+   .app-settings-outer-tabs marker class set on that field's admin.className).
+   Child combinators (>) ensure this never touches any nested tabs field
+   inside a section (e.g. Privacy's Domain blocklist/allowlist mini-tabs),
+   and every other tabbed editor (Pages, Services, Showcases) is untouched. */
+
+.app-settings-outer-tabs {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--base) * 2);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.app-settings-outer-tabs > .tabs-field__tabs-wrap {
+  flex-shrink: 0;
+  width: 220px;
+  overflow: visible;
+  margin-bottom: 0;
+}
+
+.app-settings-outer-tabs > .tabs-field__tabs-wrap > .tabs-field__tabs {
+  flex-direction: column;
+  display: flex;
+  min-width: 0;
+  border-bottom: none;
+  border-right: 1px solid var(--theme-elevation-100);
+}
+
+.app-settings-outer-tabs > .tabs-field__tabs-wrap > .tabs-field__tabs:before,
+.app-settings-outer-tabs > .tabs-field__tabs-wrap > .tabs-field__tabs:after {
+  display: none;
+}
+
+.app-settings-outer-tabs > .tabs-field__tabs-wrap > .tabs-field__tabs > .tabs-field__tab-button {
+  width: 100%;
+  padding: 8px 16px 8px 0;
+  margin: 0;
+}
+
+.app-settings-outer-tabs > .tabs-field__tabs-wrap > .tabs-field__tabs > .tabs-field__tab-button:after {
+  top: 0;
+  bottom: 0;
+  right: -1px;
+  left: auto;
+  width: 2px;
+  height: auto;
+}
+
+.app-settings-outer-tabs > .tabs-field__content-wrap {
+  flex: 1;
+  min-width: 0;
+  padding-left: 0;
+}

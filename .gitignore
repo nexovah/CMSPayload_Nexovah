@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+.next/
+tsconfig.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Local SQLite database — real data, transferred to the server separately
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# User-uploaded media — transferred to the server separately
+media/
+
+# OS
+.DS_Store
