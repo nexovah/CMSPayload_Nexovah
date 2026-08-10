@@ -15,7 +15,8 @@ export const CampaignMedia: CollectionConfig = {
     delete: ({ req }) => Boolean(req.user),
   },
   upload: {
-    staticDir: '../campaign-media',
+    // See Media.ts — same reasoning, configurable persistent path in prod.
+    staticDir: process.env.CAMPAIGN_MEDIA_DIR || '../campaign-media',
   },
   fields: [{ name: 'alt', type: 'text' }],
 }

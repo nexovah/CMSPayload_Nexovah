@@ -9,7 +9,11 @@ export const Media: CollectionConfig = {
     { name: 'alt', type: 'text', required: true },
   ],
   upload: {
-    staticDir: '../media',
+    // Configurable so production can point at a persistent absolute path
+    // outside the versioned deploy folder (which gets replaced on every
+    // deploy, wiping anything stored relative to it) — same reasoning as
+    // DATABASE_URI. Falls back to the local relative path for dev.
+    staticDir: process.env.MEDIA_DIR || '../media',
     mimeTypes: ['image/*'],
     imageSizes: [
       { name: 'thumbnail', width: 300 },
