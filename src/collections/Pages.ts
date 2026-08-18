@@ -34,7 +34,10 @@ export const Pages: CollectionConfig = {
             {
               name: 'heroImages',
               type: 'array',
-              admin: { description: 'The crossfading collage images in the hero image strip.' },
+              admin: {
+                description:
+                  'The hero image strip, left to right. Each row is one 320×440px placeholder showing exactly one image — add as many rows as you like (12-15 is typical); order here is the display order.',
+              },
               fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
             },
             // Website Building 3-Step Process (field names kept as workShowcase* internally
