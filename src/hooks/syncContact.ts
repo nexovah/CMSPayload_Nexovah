@@ -1,5 +1,13 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
+// Leads submitted through specific forms auto-join their matching Contact to a
+// dedicated Contact Group — the group must already exist (created manually in
+// the admin); this only links to it, never creates it, so a typo here can't
+// spawn a stray duplicate group.
+const FORM_TYPE_TO_GROUP_NAME: Record<string, string> = {
+  'design-my-website': 'Design My Website Ad Campaign',
+}
+
 // After a lead is created, find-or-create a matching Contacts record by email
 // and link it — turns a flat form log into an actual deduplicated customer list.
 export const syncContactAfterLeadChange: CollectionAfterChangeHook = async ({ doc, req, operation }) => {
@@ -15,10 +23,14 @@ export const syncContactAfterLeadChange: CollectionAfterChangeHook = async ({ do
   })
 
   let contactId: string | number
+  let currentGroups: (string | number)[] = []
 
   if (existing.docs.length > 0) {
     const contact = existing.docs[0]
     contactId = contact.id
+    currentGroups = (contact.groups ?? []).map((g: unknown) =>
+      typeof g === 'object' && g ? (g as { id: string | number }).id : (g as string | number),
+    )
     await payload.update({
       collection: 'contacts',
       id: contactId,
@@ -38,6 +50,25 @@ export const syncContactAfterLeadChange: CollectionAfterChangeHook = async ({ do
       },
     })
     contactId = created.id
+  }
+
+  // Auto-join the form-specific Contact Group, if one is configured for this formType.
+  const groupName = FORM_TYPE_TO_GROUP_NAME[doc.formType as string]
+  if (groupName) {
+    const group = await payload.find({
+      collection: 'contact-groups',
+      where: { name: { equals: groupName } },
+      limit: 1,
+      overrideAccess: true,
+    })
+    const groupDoc = group.docs[0]
+    if (groupDoc && !currentGroups.includes(groupDoc.id)) {
+      await payload.update({
+        collection: 'contacts',
+        id: contactId,
+        data: { groups: [...currentGroups, groupDoc.id] },
+      })
+    }
   }
 
   await payload.update({
