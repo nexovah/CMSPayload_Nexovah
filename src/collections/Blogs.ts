@@ -12,11 +12,37 @@ export const Blogs: CollectionConfig = {
     description: 'Select multiple rows (checkboxes on the left) to bulk-edit Status or Blog Section across many posts at once — no need to open each one individually.',
   },
   access: { read: () => true },
+  endpoints: [
+    {
+      path: '/:slug/view',
+      method: 'post',
+      handler: async (req) => {
+        const slug = req.routeParams?.slug as string
+        const existing = await req.payload.find({
+          collection: 'blogs',
+          where: { slug: { equals: slug } },
+          limit: 1,
+          depth: 0,
+        })
+        const doc = existing.docs[0]
+        if (!doc) return new Response(JSON.stringify({ error: 'Not found' }), { status: 404 })
+
+        const updated = await req.payload.update({
+          collection: 'blogs',
+          id: doc.id,
+          data: { views: (doc.views ?? 0) + 1 },
+          depth: 0,
+        })
+        return new Response(JSON.stringify({ views: updated.views }), { status: 200, headers: { 'Content-Type': 'application/json' } })
+      },
+    },
+  ],
   fields: [
     { name: 'title', type: 'text', required: true },
     { name: 'slug', type: 'text', required: true, unique: true, index: true, hooks: { beforeValidate: [formatSlug] } },
     { name: 'status', type: 'select', defaultValue: 'draft', options: ['draft', 'published'] },
     { name: 'publishedAt', type: 'date' },
+    { name: 'views', type: 'number', defaultValue: 0, admin: { readOnly: true, description: 'Auto-incremented each time the post detail page loads. Read-only.' } },
     {
       type: 'tabs',
       tabs: [

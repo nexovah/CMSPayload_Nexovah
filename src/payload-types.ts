@@ -846,6 +846,10 @@ export interface Blog {
   slug: string;
   status?: ('draft' | 'published') | null;
   publishedAt?: string | null;
+  /**
+   * Auto-incremented each time the post detail page loads. Read-only.
+   */
+  views?: number | null;
   excerpt?: string | null;
   coverImage?: (number | null) | Media;
   authorName?: string | null;
@@ -2224,6 +2228,7 @@ export interface BlogsSelect<T extends boolean = true> {
   slug?: T;
   status?: T;
   publishedAt?: T;
+  views?: T;
   excerpt?: T;
   coverImage?: T;
   authorName?: T;
