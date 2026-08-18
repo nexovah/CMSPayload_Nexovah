@@ -129,10 +129,12 @@ export interface Config {
   globals: {
     'site-settings': SiteSetting;
     'app-settings': AppSetting;
+    'n8n-settings': N8NSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     'app-settings': AppSettingsSelect<false> | AppSettingsSelect<true>;
+    'n8n-settings': N8NSettingsSelect<false> | N8NSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -3574,6 +3576,17 @@ export interface AppSetting {
         id?: string | null;
       }[]
     | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Connect site forms to n8n Webhook triggers — every matching Lead submission is POSTed here in real time (fire-and-forget; a slow or unreachable n8n instance never blocks the visitor's form).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "n8n-settings".
+ */
+export interface N8NSetting {
+  id: number;
   /**
    * One row per form you want to trigger a workflow. Create a Webhook node in n8n (POST method), copy its Production URL here.
    */
@@ -3937,6 +3950,15 @@ export interface AppSettingsSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "n8n-settings_select".
+ */
+export interface N8NSettingsSelect<T extends boolean = true> {
   n8nWebhooks?:
     | T
     | {

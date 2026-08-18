@@ -25,6 +25,7 @@ import { Categories } from './collections/Categories'
 import { Redirects } from './collections/Redirects'
 import { SiteSettings } from './globals/SiteSettings'
 import { AppSettings } from './globals/AppSettings'
+import { N8NSettings } from './globals/N8NSettings'
 import { runDueScheduledCampaigns, resumeDailyLimitPausedCampaigns } from './lib/campaignSend'
 import { runDueAutomationSteps } from './lib/automationSend'
 
@@ -61,7 +62,7 @@ export default buildConfig({
     Categories,
     Redirects,
   ],
-  globals: [SiteSettings, AppSettings],
+  globals: [SiteSettings, AppSettings, N8NSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
