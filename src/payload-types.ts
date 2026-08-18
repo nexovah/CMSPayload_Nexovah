@@ -3574,6 +3574,27 @@ export interface AppSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * One row per form you want to trigger a workflow. Create a Webhook node in n8n (POST method), copy its Production URL here.
+   */
+  n8nWebhooks?:
+    | {
+        enabled?: boolean | null;
+        /**
+         * Which form's submissions POST to this webhook. Only one enabled row per form type is used.
+         */
+        formType: 'design-my-website' | 'quote' | 'contact';
+        /**
+         * The n8n Webhook trigger node's Production URL (POST method).
+         */
+        webhookUrl: string;
+        /**
+         * Optional — for your own reference only, e.g. "Design My Website → WhatsApp alert workflow".
+         */
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3914,6 +3935,15 @@ export interface AppSettingsSelect<T extends boolean = true> {
               value?: T;
               id?: T;
             };
+        id?: T;
+      };
+  n8nWebhooks?:
+    | T
+    | {
+        enabled?: T;
+        formType?: T;
+        webhookUrl?: T;
+        label?: T;
         id?: T;
       };
   updatedAt?: T;

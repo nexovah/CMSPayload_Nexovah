@@ -22,15 +22,13 @@ export const syncContactAfterLeadChange: CollectionAfterChangeHook = async ({ do
     limit: 1,
   })
 
-  let contactId: string | number
-  let currentGroups: (string | number)[] = []
+  let contactId: number
+  let currentGroups: number[] = []
 
   if (existing.docs.length > 0) {
     const contact = existing.docs[0]
     contactId = contact.id
-    currentGroups = (contact.groups ?? []).map((g: unknown) =>
-      typeof g === 'object' && g ? (g as { id: string | number }).id : (g as string | number),
-    )
+    currentGroups = (contact.groups ?? []).map((g) => (typeof g === 'object' && g ? g.id : g))
     await payload.update({
       collection: 'contacts',
       id: contactId,

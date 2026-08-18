@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { syncContactAfterLeadChange } from '../hooks/syncContact'
 import { defaultLeadSourceToWebsite } from '../hooks/defaultLeadSource'
 import { sendLeadAutoReply } from '../hooks/sendLeadAutoReply'
+import { forwardLeadToN8n } from '../hooks/n8nWebhook'
 
 // The "CRM" — every Contact form + Get a Quote form submission lands here,
 // tagged by formType so the two are filterable without needing two collections.
@@ -117,6 +118,6 @@ export const Leads: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [defaultLeadSourceToWebsite],
-    afterChange: [syncContactAfterLeadChange, sendLeadAutoReply],
+    afterChange: [syncContactAfterLeadChange, sendLeadAutoReply, forwardLeadToN8n],
   },
 }
