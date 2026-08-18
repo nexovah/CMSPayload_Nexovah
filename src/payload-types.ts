@@ -3605,6 +3605,29 @@ export interface N8NSetting {
          * Optional — for your own reference only, e.g. "Design My Website → WhatsApp alert workflow".
          */
         label?: string | null;
+        /**
+         * Only checked fields are included in the JSON POSTed to this webhook. The Lead ID is always included regardless, for traceability.
+         */
+        fieldsToSend?:
+          | (
+              | 'name'
+              | 'email'
+              | 'phone'
+              | 'formType'
+              | 'companyName'
+              | 'website'
+              | 'serviceCategory'
+              | 'timelineDays'
+              | 'budgetCurrency'
+              | 'budget'
+              | 'message'
+              | 'sourcePage'
+              | 'utmSource'
+              | 'utmMedium'
+              | 'utmCampaign'
+              | 'createdAt'
+            )[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -3966,6 +3989,7 @@ export interface N8NSettingsSelect<T extends boolean = true> {
         formType?: T;
         webhookUrl?: T;
         label?: T;
+        fieldsToSend?: T;
         id?: T;
       };
   updatedAt?: T;
