@@ -376,6 +376,25 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  quoteHeroHeading?: string | null;
+  quoteHeroSubheading?: string | null;
+  quoteHeroDescription?: string | null;
+  quoteAfterSubmitHeading?: string | null;
+  quoteAfterSubmitSteps?:
+    | {
+        icon: number | Media;
+        title: string;
+        desc: string;
+        id?: string | null;
+      }[]
+    | null;
+  quoteWhyHeading?: string | null;
+  quoteWhyItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   blogPageTitle?: string | null;
   blogPageSubtitle?: string | null;
   /**
@@ -1811,6 +1830,25 @@ export interface PagesSelect<T extends boolean = true> {
               text?: T;
               id?: T;
             };
+        id?: T;
+      };
+  quoteHeroHeading?: T;
+  quoteHeroSubheading?: T;
+  quoteHeroDescription?: T;
+  quoteAfterSubmitHeading?: T;
+  quoteAfterSubmitSteps?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        desc?: T;
+        id?: T;
+      };
+  quoteWhyHeading?: T;
+  quoteWhyItems?:
+    | T
+    | {
+        text?: T;
         id?: T;
       };
   blogPageTitle?: T;

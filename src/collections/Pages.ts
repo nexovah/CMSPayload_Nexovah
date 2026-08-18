@@ -201,6 +201,37 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
+          label: 'Get a Quote Content',
+          description: 'Only used by the /get-a-quote page.',
+          admin: { condition: (data) => data?.slug === 'get-a-quote' },
+          fields: [
+            { name: 'quoteHeroHeading', type: 'text' },
+            { name: 'quoteHeroSubheading', type: 'text' },
+            { name: 'quoteHeroDescription', type: 'textarea' },
+            { name: 'quoteAfterSubmitHeading', type: 'text', defaultValue: 'After you submit the form' },
+            {
+              name: 'quoteAfterSubmitSteps',
+              type: 'array',
+              label: 'After Submit Steps',
+              labels: { singular: 'Step', plural: 'Steps' },
+              minRows: 1,
+              maxRows: 3,
+              fields: [
+                { name: 'icon', type: 'upload', relationTo: 'media', required: true },
+                { name: 'title', type: 'text', required: true },
+                { name: 'desc', type: 'text', required: true },
+              ],
+            },
+            { name: 'quoteWhyHeading', type: 'text', defaultValue: 'Why request a quote from Nexovah?' },
+            {
+              name: 'quoteWhyItems',
+              type: 'array',
+              label: 'Why Request a Quote — Bullets',
+              fields: [{ name: 'text', type: 'text', required: true }],
+            },
+          ],
+        },
+        {
           label: 'Blog Page Content',
           description: 'Only used by the /blog list page header — individual posts come from the Blogs collection.',
           admin: { condition: (data) => data?.slug === 'blog' },
