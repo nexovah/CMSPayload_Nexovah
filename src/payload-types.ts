@@ -513,6 +513,37 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  hiringEyebrow?: string | null;
+  hiringHeading?: string | null;
+  hiringDescription?: string | null;
+  /**
+   * Every "Apply Now" button opens the visitor's email client addressed here, subject pre-filled with the job title.
+   */
+  hiringApplyEmail?: string | null;
+  hiringApplyButtonLabel?: string | null;
+  hiringJobs?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  hiringCareerHeading?: string | null;
+  hiringCareerDescription?: string | null;
+  hiringCareerPoints?:
+    | {
+        heading: string;
+        desc: string;
+        id?: string | null;
+      }[]
+    | null;
+  hiringPerks?:
+    | {
+        title: string;
+        desc: string;
+        id?: string | null;
+      }[]
+    | null;
   blogPageTitle?: string | null;
   blogPageSubtitle?: string | null;
   /**
@@ -2080,6 +2111,34 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        id?: T;
+      };
+  hiringEyebrow?: T;
+  hiringHeading?: T;
+  hiringDescription?: T;
+  hiringApplyEmail?: T;
+  hiringApplyButtonLabel?: T;
+  hiringJobs?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  hiringCareerHeading?: T;
+  hiringCareerDescription?: T;
+  hiringCareerPoints?:
+    | T
+    | {
+        heading?: T;
+        desc?: T;
+        id?: T;
+      };
+  hiringPerks?:
+    | T
+    | {
+        title?: T;
+        desc?: T;
         id?: T;
       };
   blogPageTitle?: T;

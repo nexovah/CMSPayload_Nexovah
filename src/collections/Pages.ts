@@ -371,6 +371,50 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
+          label: 'We Are Hiring Content',
+          description: 'Only used by the /we-are-hiring page.',
+          admin: { condition: (data) => data?.slug === 'we-are-hiring' },
+          fields: [
+            { name: 'hiringEyebrow', type: 'text', defaultValue: 'WE ARE HIRING' },
+            { name: 'hiringHeading', type: 'text', defaultValue: 'Top Job Openings' },
+            { name: 'hiringDescription', type: 'textarea' },
+            {
+              name: 'hiringApplyEmail',
+              type: 'email',
+              admin: { description: 'Every "Apply Now" button opens the visitor\'s email client addressed here, subject pre-filled with the job title.' },
+            },
+            { name: 'hiringApplyButtonLabel', type: 'text', defaultValue: 'Apply Now' },
+            {
+              name: 'hiringJobs',
+              type: 'array',
+              labels: { singular: 'Job Opening', plural: 'Job Openings' },
+              fields: [
+                { name: 'title', type: 'text', required: true },
+                { name: 'description', type: 'textarea', required: true },
+              ],
+            },
+            { name: 'hiringCareerHeading', type: 'text', defaultValue: 'Your gateway to a shining career awaits' },
+            { name: 'hiringCareerDescription', type: 'textarea' },
+            {
+              name: 'hiringCareerPoints',
+              type: 'array',
+              fields: [
+                { name: 'heading', type: 'text', required: true },
+                { name: 'desc', type: 'textarea', required: true },
+              ],
+            },
+            {
+              name: 'hiringPerks',
+              type: 'array',
+              labels: { singular: 'Perk', plural: 'Perks' },
+              fields: [
+                { name: 'title', type: 'text', required: true },
+                { name: 'desc', type: 'textarea', required: true },
+              ],
+            },
+          ],
+        },
+        {
           label: 'Blog Page Content',
           description: 'Only used by the /blog list page header — individual posts come from the Blogs collection.',
           admin: { condition: (data) => data?.slug === 'blog' },
