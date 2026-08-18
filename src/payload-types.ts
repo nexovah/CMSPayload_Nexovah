@@ -355,6 +355,124 @@ export interface Page {
   contactDescription?: string | null;
   contactFormHeading?: string | null;
   contactCardBackgroundImage?: (number | null) | Media;
+  dmwHeroHeadingLine1?: string | null;
+  dmwHeroHeadingLine2?: string | null;
+  dmwPillTags?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  dmwPillLabel?: string | null;
+  dmwPriceAmount?: string | null;
+  dmwPricePeriod?: string | null;
+  /**
+   * Shown in the hero savings badge and again above the pricing table.
+   */
+  dmwSaveAmount?: string | null;
+  dmwOnlineStoreLabel?: string | null;
+  dmwOnlineStorePrice?: string | null;
+  dmwTrustText?: string | null;
+  dmwAnnualPlanText?: string | null;
+  dmwFormHeading?: string | null;
+  dmwFormSubheading?: string | null;
+  dmwFormBusinessPlaceholder?: string | null;
+  dmwFormDescPlaceholder?: string | null;
+  dmwFormButtonLabel?: string | null;
+  dmwStep2Heading?: string | null;
+  dmwStep2Subheading?: string | null;
+  dmwStep2PhonePlaceholder?: string | null;
+  dmwStep2NamePlaceholder?: string | null;
+  dmwStep2EmailPlaceholder?: string | null;
+  dmwStep2ButtonLabel?: string | null;
+  dmwPricingHeading?: string | null;
+  dmwPricingSections?:
+    | {
+        heading: string;
+        rows?:
+          | {
+              label: string;
+              other: string;
+              nexovah: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  dmwPricingTotalLabel?: string | null;
+  dmwPricingTotalOther?: string | null;
+  dmwPricingTotalNexovah?: string | null;
+  dmwClientsHeadingLine1?: string | null;
+  dmwClientsHeadingLine2?: string | null;
+  dmwClientStories?:
+    | {
+        image?: (number | null) | Media;
+        quote: string;
+        name?: string | null;
+        company?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  dmwAdvantageHeading?: string | null;
+  dmwAdvantageCards?:
+    | {
+        icon?: (number | null) | Media;
+        title: string;
+        items?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        footer?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  dmwAlwaysOnHeading?: string | null;
+  dmwAlwaysOnItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  dmwZeroRiskHeading?: string | null;
+  dmwZeroRiskBadgeText?: string | null;
+  dmwZeroRiskButtonLabel?: string | null;
+  dmwZeroRiskItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Rendered in dark text.
+   */
+  dmwAgencyHeadingPrefix?: string | null;
+  /**
+   * Rendered in brand green.
+   */
+  dmwAgencyHeadingHighlight?: string | null;
+  dmwAgencyDescription?: string | null;
+  dmwAgencyItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  dmwAgencyImage?: (number | null) | Media;
+  dmwAgencyButtonLabel?: string | null;
+  dmwAgencyContactLabel?: string | null;
+  dmwAgencyContactEmail?: string | null;
+  dmwFaqHeading?: string | null;
+  dmwFaqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  dmwStickyBarLabel?: string | null;
   getInTouchHeading?: string | null;
   getInTouchDescription?: string | null;
   getInTouchEmailLabel?: string | null;
@@ -1068,7 +1186,7 @@ export interface Lead {
   name: string;
   email: string;
   phone?: string | null;
-  formType: 'contact' | 'quote' | 'crm';
+  formType: 'contact' | 'quote' | 'design-my-website' | 'crm';
   companyName?: string | null;
   /**
    * e.g. https://example.com — must include a valid domain extension (.com, .in, .eu, etc).
@@ -1815,6 +1933,115 @@ export interface PagesSelect<T extends boolean = true> {
   contactDescription?: T;
   contactFormHeading?: T;
   contactCardBackgroundImage?: T;
+  dmwHeroHeadingLine1?: T;
+  dmwHeroHeadingLine2?: T;
+  dmwPillTags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  dmwPillLabel?: T;
+  dmwPriceAmount?: T;
+  dmwPricePeriod?: T;
+  dmwSaveAmount?: T;
+  dmwOnlineStoreLabel?: T;
+  dmwOnlineStorePrice?: T;
+  dmwTrustText?: T;
+  dmwAnnualPlanText?: T;
+  dmwFormHeading?: T;
+  dmwFormSubheading?: T;
+  dmwFormBusinessPlaceholder?: T;
+  dmwFormDescPlaceholder?: T;
+  dmwFormButtonLabel?: T;
+  dmwStep2Heading?: T;
+  dmwStep2Subheading?: T;
+  dmwStep2PhonePlaceholder?: T;
+  dmwStep2NamePlaceholder?: T;
+  dmwStep2EmailPlaceholder?: T;
+  dmwStep2ButtonLabel?: T;
+  dmwPricingHeading?: T;
+  dmwPricingSections?:
+    | T
+    | {
+        heading?: T;
+        rows?:
+          | T
+          | {
+              label?: T;
+              other?: T;
+              nexovah?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  dmwPricingTotalLabel?: T;
+  dmwPricingTotalOther?: T;
+  dmwPricingTotalNexovah?: T;
+  dmwClientsHeadingLine1?: T;
+  dmwClientsHeadingLine2?: T;
+  dmwClientStories?:
+    | T
+    | {
+        image?: T;
+        quote?: T;
+        name?: T;
+        company?: T;
+        id?: T;
+      };
+  dmwAdvantageHeading?: T;
+  dmwAdvantageCards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        footer?: T;
+        id?: T;
+      };
+  dmwAlwaysOnHeading?: T;
+  dmwAlwaysOnItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  dmwZeroRiskHeading?: T;
+  dmwZeroRiskBadgeText?: T;
+  dmwZeroRiskButtonLabel?: T;
+  dmwZeroRiskItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  dmwAgencyHeadingPrefix?: T;
+  dmwAgencyHeadingHighlight?: T;
+  dmwAgencyDescription?: T;
+  dmwAgencyItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  dmwAgencyImage?: T;
+  dmwAgencyButtonLabel?: T;
+  dmwAgencyContactLabel?: T;
+  dmwAgencyContactEmail?: T;
+  dmwFaqHeading?: T;
+  dmwFaqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  dmwStickyBarLabel?: T;
   getInTouchHeading?: T;
   getInTouchDescription?: T;
   getInTouchEmailLabel?: T;

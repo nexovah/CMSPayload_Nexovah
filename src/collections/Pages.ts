@@ -169,6 +169,145 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
+          label: 'Design My Website Content',
+          description: 'Only used by the /design-my-website standalone microsite (no shared header/footer — everything on the page lives here).',
+          admin: { condition: (data) => data?.slug === 'design-my-website' },
+          fields: [
+            // Hero
+            { name: 'dmwHeroHeadingLine1', type: 'text', defaultValue: 'Complete Website' },
+            { name: 'dmwHeroHeadingLine2', type: 'text', defaultValue: '+ Google Business Listing' },
+            {
+              name: 'dmwPillTags',
+              type: 'array',
+              label: 'Hero Pill — Tag List',
+              fields: [{ name: 'text', type: 'text', required: true }],
+            },
+            { name: 'dmwPillLabel', type: 'text', defaultValue: 'FREE TOOLS' },
+            { name: 'dmwPriceAmount', type: 'text', defaultValue: '₹299' },
+            { name: 'dmwPricePeriod', type: 'text', defaultValue: '/month' },
+            { name: 'dmwSaveAmount', type: 'text', defaultValue: '₹20,000', admin: { description: 'Shown in the hero savings badge and again above the pricing table.' } },
+            { name: 'dmwOnlineStoreLabel', type: 'text', defaultValue: 'Online Store' },
+            { name: 'dmwOnlineStorePrice', type: 'text', defaultValue: '+ ₹999 Only' },
+            { name: 'dmwTrustText', type: 'text', defaultValue: '350+ Businesses trust Nexovah' },
+            { name: 'dmwAnnualPlanText', type: 'text', defaultValue: 'Annual Plan ₹3,999/yr. Save 15% + FREE Domain' },
+
+            // Quick-form card — Step 1
+            { name: 'dmwFormHeading', type: 'text', defaultValue: 'Your Website in 30 Seconds' },
+            { name: 'dmwFormSubheading', type: 'text', defaultValue: 'Enter Business Details, See Your Website FREE' },
+            { name: 'dmwFormBusinessPlaceholder', type: 'text', defaultValue: 'Enter business name' },
+            { name: 'dmwFormDescPlaceholder', type: 'text', defaultValue: 'Describe your business, enter products, services, specialty to get best website' },
+            { name: 'dmwFormButtonLabel', type: 'text', defaultValue: 'Get My Website' },
+
+            // Step 2 — "Continue to Chat with Us"
+            { name: 'dmwStep2Heading', type: 'text', defaultValue: 'Continue to Chat with Us' },
+            { name: 'dmwStep2Subheading', type: 'text', defaultValue: "Let's Build your custom designed website in Minutes" },
+            { name: 'dmwStep2PhonePlaceholder', type: 'text', defaultValue: 'WhatsApp Number' },
+            { name: 'dmwStep2NamePlaceholder', type: 'text', defaultValue: 'Enter Your Name' },
+            { name: 'dmwStep2EmailPlaceholder', type: 'text', defaultValue: 'Your Email Address' },
+            { name: 'dmwStep2ButtonLabel', type: 'text', defaultValue: 'Get My Website' },
+
+            // Pricing comparison table
+            { name: 'dmwPricingHeading', type: 'text', defaultValue: 'Build your Business, not just a Website' },
+            {
+              name: 'dmwPricingSections',
+              type: 'array',
+              labels: { singular: 'Pricing Section', plural: 'Pricing Sections' },
+              fields: [
+                { name: 'heading', type: 'text', required: true },
+                {
+                  name: 'rows',
+                  type: 'array',
+                  fields: [
+                    { name: 'label', type: 'text', required: true },
+                    { name: 'other', type: 'text', required: true },
+                    { name: 'nexovah', type: 'text', required: true },
+                  ],
+                },
+              ],
+            },
+            { name: 'dmwPricingTotalLabel', type: 'text', defaultValue: 'Total / Year' },
+            { name: 'dmwPricingTotalOther', type: 'text', defaultValue: '₹25,999' },
+            { name: 'dmwPricingTotalNexovah', type: 'text', defaultValue: '₹ 3,999 ONLY!' },
+
+            // Client stories
+            { name: 'dmwClientsHeadingLine1', type: 'text', defaultValue: '350+ Businesses' },
+            { name: 'dmwClientsHeadingLine2', type: 'text', defaultValue: 'trust Nexovah Technology' },
+            {
+              name: 'dmwClientStories',
+              type: 'array',
+              labels: { singular: 'Client Story', plural: 'Client Stories' },
+              fields: [
+                { name: 'image', type: 'upload', relationTo: 'media' },
+                { name: 'quote', type: 'text', required: true },
+                { name: 'name', type: 'text' },
+                { name: 'company', type: 'text' },
+              ],
+            },
+
+            // The Nexovah Advantage
+            { name: 'dmwAdvantageHeading', type: 'text', defaultValue: 'The Nexovah Advantage' },
+            {
+              name: 'dmwAdvantageCards',
+              type: 'array',
+              labels: { singular: 'Advantage Card', plural: 'Advantage Cards' },
+              fields: [
+                { name: 'icon', type: 'upload', relationTo: 'media' },
+                { name: 'title', type: 'text', required: true },
+                {
+                  name: 'items',
+                  type: 'array',
+                  fields: [{ name: 'text', type: 'text', required: true }],
+                },
+                { name: 'footer', type: 'textarea' },
+              ],
+            },
+            { name: 'dmwAlwaysOnHeading', type: 'text', defaultValue: 'Always On, 100% Safe' },
+            {
+              name: 'dmwAlwaysOnItems',
+              type: 'array',
+              fields: [{ name: 'text', type: 'text', required: true }],
+            },
+
+            // See Before You Pay
+            { name: 'dmwZeroRiskHeading', type: 'text', defaultValue: 'See Before You Pay' },
+            { name: 'dmwZeroRiskBadgeText', type: 'text', defaultValue: 'Try with zero risk' },
+            { name: 'dmwZeroRiskButtonLabel', type: 'text', defaultValue: 'Try for FREE' },
+            {
+              name: 'dmwZeroRiskItems',
+              type: 'array',
+              fields: [{ name: 'text', type: 'text', required: true }],
+            },
+
+            // Agency Partnerships
+            { name: 'dmwAgencyHeadingPrefix', type: 'text', defaultValue: 'Agency', admin: { description: 'Rendered in dark text.' } },
+            { name: 'dmwAgencyHeadingHighlight', type: 'text', defaultValue: 'Partnerships', admin: { description: 'Rendered in brand green.' } },
+            { name: 'dmwAgencyDescription', type: 'textarea', defaultValue: 'If you are a freelancer, IT services firm or an agency, become an AI Agency with Open Weaver.' },
+            {
+              name: 'dmwAgencyItems',
+              type: 'array',
+              fields: [{ name: 'text', type: 'text', required: true }],
+            },
+            { name: 'dmwAgencyImage', type: 'upload', relationTo: 'media' },
+            { name: 'dmwAgencyButtonLabel', type: 'text', defaultValue: 'Start your first Website Now' },
+            { name: 'dmwAgencyContactLabel', type: 'text', defaultValue: 'Contact us' },
+            { name: 'dmwAgencyContactEmail', type: 'text', defaultValue: 'hello@nexovah.com' },
+
+            // FAQ
+            { name: 'dmwFaqHeading', type: 'text', defaultValue: 'Frequently Asked Questions' },
+            {
+              name: 'dmwFaqs',
+              type: 'array',
+              fields: [
+                { name: 'question', type: 'text', required: true },
+                { name: 'answer', type: 'textarea', required: true },
+              ],
+            },
+
+            // Sticky bottom bar
+            { name: 'dmwStickyBarLabel', type: 'text', defaultValue: 'Try for FREE' },
+          ],
+        },
+        {
           label: 'Contact Card',
           description: 'The dark "Get in touch" / "Locations" card at the bottom of the /contact page.',
           admin: { condition: (data) => data?.slug === 'contact' },

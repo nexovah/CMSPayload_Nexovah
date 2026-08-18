@@ -29,6 +29,7 @@ export const Leads: CollectionConfig = {
       options: [
         { label: 'Contact Form', value: 'contact' },
         { label: 'Get a Quote', value: 'quote' },
+        { label: 'Design My Website Form', value: 'design-my-website' },
         { label: 'CRM Form', value: 'crm' },
       ],
     },
