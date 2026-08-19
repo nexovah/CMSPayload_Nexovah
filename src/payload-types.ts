@@ -251,7 +251,7 @@ export interface Page {
   heroCtaLabel?: string | null;
   heroCtaUrl?: string | null;
   /**
-   * The crossfading collage images in the hero image strip.
+   * The hero image strip, left to right. Each row is one 320×440px placeholder showing exactly one image — add as many rows as you like (12-15 is typical); order here is the display order.
    */
   heroImages?:
     | {
@@ -621,6 +621,10 @@ export interface Page {
               id?: string | null;
             }[]
           | null;
+        /**
+         * Shown in the sticky right-hand card as this industry scrolls into view — same crossfade treatment as the About page journey timeline.
+         */
+        image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -2216,6 +2220,7 @@ export interface PagesSelect<T extends boolean = true> {
               text?: T;
               id?: T;
             };
+        image?: T;
         id?: T;
       };
   techEyebrow?: T;

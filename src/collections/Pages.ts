@@ -523,6 +523,12 @@ export const Pages: CollectionConfig = {
                   type: 'array',
                   fields: [{ name: 'text', type: 'text', required: true }],
                 },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  admin: { description: 'Shown in the sticky right-hand card as this industry scrolls into view — same crossfade treatment as the About page journey timeline.' },
+                },
               ],
             },
           ],
