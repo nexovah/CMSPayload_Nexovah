@@ -954,6 +954,10 @@ export interface Service {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Pick the other service pages to cross-link from here.
+   */
+  relatedServices?: (number | Service)[] | null;
   faqTitle?: string | null;
   faqs?:
     | {
@@ -2380,6 +2384,7 @@ export interface ServicesSelect<T extends boolean = true> {
         desc?: T;
         id?: T;
       };
+  relatedServices?: T;
   faqTitle?: T;
   faqs?:
     | T

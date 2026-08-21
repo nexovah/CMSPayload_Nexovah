@@ -150,6 +150,19 @@ export const Services: CollectionConfig = {
           ],
         },
         {
+          label: 'Related Services',
+          description: 'Cross-links to other service pages — shown as a row of cards near the bottom of this page. Set this on both services to link them to each other (e.g. CMS Development ↔ WordPress Development).',
+          fields: [
+            {
+              name: 'relatedServices',
+              type: 'relationship',
+              relationTo: 'services',
+              hasMany: true,
+              admin: { description: 'Pick the other service pages to cross-link from here.' },
+            },
+          ],
+        },
+        {
           label: 'FAQs',
           fields: [
             { name: 'faqTitle', type: 'text' },
