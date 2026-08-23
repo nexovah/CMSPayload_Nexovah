@@ -19,6 +19,22 @@ export const SiteSettings: GlobalConfig = {
       type: 'tabs',
       tabs: [
         {
+          label: 'General',
+          description: 'Core site-wide settings that differ between environments.',
+          fields: [
+            {
+              name: 'baseUrl',
+              type: 'text',
+              required: true,
+              defaultValue: 'https://nexovah.com',
+              admin: {
+                description:
+                  'Full site URL with protocol, no trailing slash — e.g. https://nexovah.com in production, http://localhost:8443 in development. Used for canonical tags, Open Graph/Twitter URLs, JSON-LD structured data, and sitemap.xml. Change this one field when moving between environments; nothing else needs to change.',
+              },
+            },
+          ],
+        },
+        {
           label: 'Header',
           fields: [
             {
@@ -242,6 +258,30 @@ export const SiteSettings: GlobalConfig = {
             { name: 'ga4Id', type: 'text' },
             { name: 'metaPixelId', type: 'text' },
             { name: 'robotsTxt', type: 'textarea' },
+          ],
+        },
+        {
+          label: 'Sitemap',
+          description: 'Powers the visual /sitemap page (linked from the footer "Sitemap" link). Four streams branch off Home — Pages, Services, Case Studies, Blog by default — each holding its own list of links. Add, edit, reorder, or delete any stream or link here; the frontend tree updates automatically.',
+          fields: [
+            { name: 'sitemapHeading', type: 'text', defaultValue: 'Sitemap' },
+            { name: 'sitemapIntro', type: 'textarea', admin: { description: 'Optional short line shown under the heading.' } },
+            {
+              name: 'sitemapStreams',
+              type: 'array',
+              admin: { description: 'Each row is one branch off the Home box (e.g. Pages, Services, Case Studies, Blog). Reorder by dragging.' },
+              fields: [
+                { name: 'title', type: 'text', required: true },
+                {
+                  name: 'links',
+                  type: 'array',
+                  fields: [
+                    { name: 'label', type: 'text', required: true },
+                    { name: 'url', type: 'text', required: true },
+                  ],
+                },
+              ],
+            },
           ],
         },
         {

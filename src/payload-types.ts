@@ -2978,6 +2978,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface SiteSetting {
   id: number;
+  /**
+   * Full site URL with protocol, no trailing slash — e.g. https://nexovah.com in production, http://localhost:8443 in development. Used for canonical tags, Open Graph/Twitter URLs, JSON-LD structured data, and sitemap.xml. Change this one field when moving between environments; nothing else needs to change.
+   */
+  baseUrl: string;
   nav?:
     | {
         label: string;
@@ -3287,6 +3291,27 @@ export interface SiteSetting {
   ga4Id?: string | null;
   metaPixelId?: string | null;
   robotsTxt?: string | null;
+  sitemapHeading?: string | null;
+  /**
+   * Optional short line shown under the heading.
+   */
+  sitemapIntro?: string | null;
+  /**
+   * Each row is one branch off the Home box (e.g. Pages, Services, Case Studies, Blog). Reorder by dragging.
+   */
+  sitemapStreams?:
+    | {
+        title: string;
+        links?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   cookieConsentTitle?: string | null;
   /**
    * Shown before the "Privacy Policy" link, which always points to /privacy-policy.
@@ -3649,6 +3674,7 @@ export interface N8NSetting {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  baseUrl?: T;
   nav?:
     | T
     | {
@@ -3878,6 +3904,21 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   ga4Id?: T;
   metaPixelId?: T;
   robotsTxt?: T;
+  sitemapHeading?: T;
+  sitemapIntro?: T;
+  sitemapStreams?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   cookieConsentTitle?: T;
   cookieConsentBody?: T;
   cookieConsentLinkLabel?: T;
