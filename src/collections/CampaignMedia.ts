@@ -9,7 +9,10 @@ export const CampaignMedia: CollectionConfig = {
     group: 'Campaigns',
   },
   access: {
-    read: ({ req }) => Boolean(req.user),
+    // Public read — these files get embedded as <img> tags in emails sent to
+    // Gmail/Outlook/etc, which fetch them unauthenticated with no session or
+    // cookie. Write access stays admin-only. Same pattern as Media.ts.
+    read: () => true,
     create: ({ req }) => Boolean(req.user),
     update: ({ req }) => Boolean(req.user),
     delete: ({ req }) => Boolean(req.user),
