@@ -48,6 +48,27 @@ export const Contacts: CollectionConfig = {
       on: 'contact',
     },
   ],
+  endpoints: [
+    {
+      // Public — reached from the {{unsubscribe_url}} merge tag in transactional
+      // lead-reply emails (Get a Quote / Contact form receipts), not just
+      // campaign sends, so it can't require an admin session.
+      path: '/:id/unsubscribe',
+      method: 'get',
+      handler: async (req) => {
+        const id = req.routeParams?.id as string
+        try {
+          await req.payload.update({ collection: 'contacts', id, data: { unsubscribed: true } })
+        } catch {
+          // fall through to the confirmation page regardless
+        }
+        return new Response(
+          '<!doctype html><html><body style="font-family:sans-serif;padding:40px;text-align:center;color:#333;"><h2>You\'ve been unsubscribed</h2><p>You won\'t receive future emails from this list.</p></body></html>',
+          { headers: { 'Content-Type': 'text/html' } },
+        )
+      },
+    },
+  ],
   hooks: {
     afterChange: [syncDripEnrollments],
   },
