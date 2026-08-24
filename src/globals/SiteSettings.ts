@@ -222,6 +222,7 @@ export const SiteSettings: GlobalConfig = {
                 { name: 'toolIconChatgpt', type: 'group', label: 'ChatGPT icon', fields: iconGroupFields },
                 { name: 'toolIconPerplexity', type: 'group', label: 'Perplexity icon', fields: iconGroupFields },
                 { name: 'toolIconGithubRight', type: 'group', label: 'GitHub icon (right card)', fields: iconGroupFields },
+                { name: 'toolIconExtra', type: 'group', label: 'Extra icon (row 2, last card)', fields: iconGroupFields },
               ],
             },
           ],
