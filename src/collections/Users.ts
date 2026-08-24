@@ -5,7 +5,10 @@ export const Users: CollectionConfig = {
   auth: true,
   admin: { useAsTitle: 'email' },
   access: {
-    read: () => true,
+    // Was publicly readable — GET /api/users leaked every admin email address
+    // (including role) to anyone unauthenticated, with no login required.
+    // Only a logged-in user can read the user list now.
+    read: ({ req }) => Boolean(req.user),
   },
   fields: [
     {
