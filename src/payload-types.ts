@@ -3273,6 +3273,17 @@ export interface SiteSetting {
      */
     label?: string | null;
   };
+  toolIconExtra?: {
+    icon?: (number | null) | Media;
+    /**
+     * Alt text for this icon image.
+     */
+    alt?: string | null;
+    /**
+     * Admin-facing name for this icon, e.g. "Canva".
+     */
+    label?: string | null;
+  };
   ctaBannerBgImage?: (number | null) | Media;
   /**
    * Partner logos shown in the middle of the banner (Google Cloud, Meta, AWS).
@@ -3883,6 +3894,13 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         label?: T;
       };
   toolIconGithubRight?:
+    | T
+    | {
+        icon?: T;
+        alt?: T;
+        label?: T;
+      };
+  toolIconExtra?:
     | T
     | {
         icon?: T;
