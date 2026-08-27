@@ -732,6 +732,9 @@ export interface Showcase {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Masthead image at the top of the page. Fixed width, free height — never cropped.
+   */
   heroImage?: (number | null) | Media;
   meta?:
     | {
@@ -740,68 +743,81 @@ export interface Showcase {
         id?: string | null;
       }[]
     | null;
-  aboutHeading?: string | null;
-  aboutParagraph?: string | null;
-  processHeading?: string | null;
-  processParagraph?: string | null;
-  engineeringHeading?: string | null;
-  engineeringIntro?: string | null;
-  engineeringBullets?:
-    | {
-        label: string;
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  webhookHeading?: string | null;
-  webhookIntro?: string | null;
-  webhookBullets?:
-    | {
-        label: string;
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  bannerImage?: (number | null) | Media;
-  twoUpImagesA?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  lifestyleImage?: (number | null) | Media;
-  quote?: string | null;
-  ctaLabel?: string | null;
-  ctaHref?: string | null;
-  appScreenshotImage?: (number | null) | Media;
-  twoUpImagesB?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  designSystem?: {
-    heading?: string | null;
-    fontLabel?: string | null;
-    swatches?:
-      | {
-          color: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  twoUpImagesC?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  resultsHeading?: string | null;
-  resultsParagraphs?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
+  /**
+   * The body of the case study — add Text, Full-Width Image, Two-Column Image, Quote + CTA, Design System, or Results blocks in any order, and drag to reorder. This is where you add images anywhere you need one.
+   */
+  content?:
+    | (
+        | {
+            heading: string;
+            paragraph?: string | null;
+            /**
+             * Optional — leave empty for a plain paragraph section.
+             */
+            bullets?:
+              | {
+                  label: string;
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textSection';
+          }
+        | {
+            /**
+             * Renders at the full 1366px content width. Height is free — the whole image always shows, never cropped.
+             */
+            image: number | Media;
+            alt?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'fullImage';
+          }
+        | {
+            imageLeft: number | Media;
+            imageRight: number | Media;
+            altLeft?: string | null;
+            altRight?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'twoColumnImage';
+          }
+        | {
+            quote: string;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteCta';
+          }
+        | {
+            heading?: string | null;
+            fontLabel?: string | null;
+            swatches?:
+              | {
+                  color: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'designSystem';
+          }
+        | {
+            heading?: string | null;
+            paragraphs?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'resultsList';
+          }
+      )[]
     | null;
   attribution?: {
     name?: string | null;
@@ -2434,70 +2450,78 @@ export interface ShowcasesSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
-  aboutHeading?: T;
-  aboutParagraph?: T;
-  processHeading?: T;
-  processParagraph?: T;
-  engineeringHeading?: T;
-  engineeringIntro?: T;
-  engineeringBullets?:
+  content?:
     | T
     | {
-        label?: T;
-        text?: T;
-        id?: T;
-      };
-  webhookHeading?: T;
-  webhookIntro?: T;
-  webhookBullets?:
-    | T
-    | {
-        label?: T;
-        text?: T;
-        id?: T;
-      };
-  bannerImage?: T;
-  twoUpImagesA?:
-    | T
-    | {
-        image?: T;
-        id?: T;
-      };
-  lifestyleImage?: T;
-  quote?: T;
-  ctaLabel?: T;
-  ctaHref?: T;
-  appScreenshotImage?: T;
-  twoUpImagesB?:
-    | T
-    | {
-        image?: T;
-        id?: T;
-      };
-  designSystem?:
-    | T
-    | {
-        heading?: T;
-        fontLabel?: T;
-        swatches?:
+        textSection?:
           | T
           | {
-              color?: T;
+              heading?: T;
+              paragraph?: T;
+              bullets?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
               id?: T;
+              blockName?: T;
             };
-      };
-  twoUpImagesC?:
-    | T
-    | {
-        image?: T;
-        id?: T;
-      };
-  resultsHeading?: T;
-  resultsParagraphs?:
-    | T
-    | {
-        text?: T;
-        id?: T;
+        fullImage?:
+          | T
+          | {
+              image?: T;
+              alt?: T;
+              id?: T;
+              blockName?: T;
+            };
+        twoColumnImage?:
+          | T
+          | {
+              imageLeft?: T;
+              imageRight?: T;
+              altLeft?: T;
+              altRight?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteCta?:
+          | T
+          | {
+              quote?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        designSystem?:
+          | T
+          | {
+              heading?: T;
+              fontLabel?: T;
+              swatches?:
+                | T
+                | {
+                    color?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        resultsList?:
+          | T
+          | {
+              heading?: T;
+              paragraphs?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   attribution?:
     | T
