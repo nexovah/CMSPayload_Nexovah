@@ -23,6 +23,13 @@ export const SiteSettings: GlobalConfig = {
           description: 'Core site-wide settings that differ between environments.',
           fields: [
             {
+              name: 'siteName',
+              type: 'text',
+              required: true,
+              defaultValue: 'Nexovah',
+              admin: { description: 'Brand name used in page titles ("Page | Site Name"), Open Graph site_name, and structured data.' },
+            },
+            {
               name: 'baseUrl',
               type: 'text',
               required: true,
@@ -30,6 +37,24 @@ export const SiteSettings: GlobalConfig = {
               admin: {
                 description:
                   'Full site URL with protocol, no trailing slash — e.g. https://nexovah.com in production, http://localhost:8443 in development. Used for canonical tags, Open Graph/Twitter URLs, JSON-LD structured data, and sitemap.xml. Change this one field when moving between environments; nothing else needs to change.',
+              },
+            },
+            {
+              name: 'favicon',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'Browser tab icon. Square PNG or SVG, 512×512px recommended (transparent background). Shows up in browser tabs, bookmarks, and mobile home-screen shortcuts.',
+              },
+            },
+            {
+              name: 'ogDefaultImage',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'Default social share preview image (Facebook, WhatsApp, LinkedIn, Twitter/X) for any page that doesn\'t set its own. Exactly 1200×630px, JPG or PNG, under 300KB, no transparency — include logo/brand name centered with margin, since WhatsApp crops corners tight.',
               },
             },
           ],

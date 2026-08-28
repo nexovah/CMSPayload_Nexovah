@@ -259,6 +259,23 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  homeSectionOrder?:
+    | {
+        section:
+          | 'clientLogos'
+          | 'workShowcase'
+          | 'ctaBanner'
+          | 'servicesScroll'
+          | 'whyChooseUs'
+          | 'caseStudies'
+          | 'toolsAndTech'
+          | 'reviews'
+          | 'blog'
+          | 'faq'
+          | 'trustAndTools';
+        id?: string | null;
+      }[]
+    | null;
   workShowcaseHeading?: string | null;
   workShowcaseImage?: (number | null) | Media;
   workShowcaseCards?:
@@ -974,6 +991,27 @@ export interface Service {
    * Pick the other service pages to cross-link from here.
    */
   relatedServices?: (number | Service)[] | null;
+  /**
+   * Pick showcases from the Showcases collection to feature here. Leave empty to auto-show the 3 most recent published showcases.
+   */
+  relatedCaseStudies?: (number | Showcase)[] | null;
+  sectionOrder?:
+    | {
+        section:
+          | 'whatIs'
+          | 'stack'
+          | 'caseStudies'
+          | 'horizontalProcess'
+          | 'expertise'
+          | 'whyNexovah'
+          | 'toolsAndTech'
+          | 'clientLogos'
+          | 'trustAndTools'
+          | 'relatedServices'
+          | 'faq';
+        id?: string | null;
+      }[]
+    | null;
   faqTitle?: string | null;
   faqs?:
     | {
@@ -1901,6 +1939,12 @@ export interface PagesSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  homeSectionOrder?:
+    | T
+    | {
+        section?: T;
+        id?: T;
+      };
   workShowcaseHeading?: T;
   workShowcaseImage?: T;
   workShowcaseCards?:
@@ -2401,6 +2445,13 @@ export interface ServicesSelect<T extends boolean = true> {
         id?: T;
       };
   relatedServices?: T;
+  relatedCaseStudies?: T;
+  sectionOrder?:
+    | T
+    | {
+        section?: T;
+        id?: T;
+      };
   faqTitle?: T;
   faqs?:
     | T
@@ -3003,9 +3054,21 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface SiteSetting {
   id: number;
   /**
+   * Brand name used in page titles ("Page | Site Name"), Open Graph site_name, and structured data.
+   */
+  siteName: string;
+  /**
    * Full site URL with protocol, no trailing slash — e.g. https://nexovah.com in production, http://localhost:8443 in development. Used for canonical tags, Open Graph/Twitter URLs, JSON-LD structured data, and sitemap.xml. Change this one field when moving between environments; nothing else needs to change.
    */
   baseUrl: string;
+  /**
+   * Browser tab icon. Square PNG or SVG, 512×512px recommended (transparent background). Shows up in browser tabs, bookmarks, and mobile home-screen shortcuts.
+   */
+  favicon?: (number | null) | Media;
+  /**
+   * Default social share preview image (Facebook, WhatsApp, LinkedIn, Twitter/X) for any page that doesn't set its own. Exactly 1200×630px, JPG or PNG, under 300KB, no transparency — include logo/brand name centered with margin, since WhatsApp crops corners tight.
+   */
+  ogDefaultImage?: (number | null) | Media;
   nav?:
     | {
         label: string;
@@ -3709,7 +3772,10 @@ export interface N8NSetting {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
   baseUrl?: T;
+  favicon?: T;
+  ogDefaultImage?: T;
   nav?:
     | T
     | {
