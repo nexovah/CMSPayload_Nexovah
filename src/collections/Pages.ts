@@ -40,6 +40,46 @@ export const Pages: CollectionConfig = {
               },
               fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
             },
+            // Drag to reorder every section below the Hero (which always stays
+            // first). Remove a row to hide that section entirely.
+            {
+              name: 'homeSectionOrder',
+              type: 'array',
+              label: 'Section Order (below Hero)',
+              defaultValue: [
+                { section: 'clientLogos' },
+                { section: 'workShowcase' },
+                { section: 'ctaBanner' },
+                { section: 'servicesScroll' },
+                { section: 'whyChooseUs' },
+                { section: 'caseStudies' },
+                { section: 'toolsAndTech' },
+                { section: 'reviews' },
+                { section: 'blog' },
+                { section: 'faq' },
+                { section: 'trustAndTools' },
+              ],
+              fields: [
+                {
+                  name: 'section',
+                  type: 'select',
+                  required: true,
+                  options: [
+                    { label: 'Client Logos', value: 'clientLogos' },
+                    { label: 'Work Showcase (3-Step Process)', value: 'workShowcase' },
+                    { label: 'CTA Banner', value: 'ctaBanner' },
+                    { label: 'Services Horizontal Scroll', value: 'servicesScroll' },
+                    { label: 'Why Choose Us', value: 'whyChooseUs' },
+                    { label: 'Case Studies', value: 'caseStudies' },
+                    { label: 'Tools & Technologies', value: 'toolsAndTech' },
+                    { label: 'Reviews', value: 'reviews' },
+                    { label: 'Blog', value: 'blog' },
+                    { label: 'FAQs', value: 'faq' },
+                    { label: 'Trust And Tools', value: 'trustAndTools' },
+                  ],
+                },
+              ],
+            },
             // Website Building 3-Step Process (field names kept as workShowcase* internally
             // to avoid a schema migration — only the admin-facing labels changed here)
             { name: 'workShowcaseHeading', type: 'text', label: 'Website Building 3-Step Process Heading' },

@@ -163,6 +163,66 @@ export const Services: CollectionConfig = {
           ],
         },
         {
+          label: 'Case Studies',
+          description: 'The "Accelerate your Business Success" case studies row on this service page — references existing Showcases docs, never duplicates their content.',
+          fields: [
+            {
+              name: 'relatedCaseStudies',
+              type: 'relationship',
+              relationTo: 'showcases',
+              hasMany: true,
+              label: 'Case Studies to Feature',
+              admin: {
+                description: 'Pick showcases from the Showcases collection to feature here. Leave empty to auto-show the 3 most recent published showcases.',
+              },
+            },
+          ],
+        },
+        {
+          label: 'Page Layout',
+          description: 'Drag to reorder the sections on this page (below the Hero, which always stays first). Remove a row to hide that section entirely.',
+          fields: [
+            {
+              name: 'sectionOrder',
+              type: 'array',
+              label: 'Section Order',
+              defaultValue: [
+                { section: 'whatIs' },
+                { section: 'stack' },
+                { section: 'caseStudies' },
+                { section: 'horizontalProcess' },
+                { section: 'expertise' },
+                { section: 'whyNexovah' },
+                { section: 'toolsAndTech' },
+                { section: 'clientLogos' },
+                { section: 'trustAndTools' },
+                { section: 'relatedServices' },
+                { section: 'faq' },
+              ],
+              fields: [
+                {
+                  name: 'section',
+                  type: 'select',
+                  required: true,
+                  options: [
+                    { label: 'What Is / Process', value: 'whatIs' },
+                    { label: 'Tech Stack', value: 'stack' },
+                    { label: 'Case Studies', value: 'caseStudies' },
+                    { label: 'Horizontal Process Scroll', value: 'horizontalProcess' },
+                    { label: 'Expertise', value: 'expertise' },
+                    { label: 'Why Nexovah', value: 'whyNexovah' },
+                    { label: 'Tools & Technologies', value: 'toolsAndTech' },
+                    { label: 'Client Logos', value: 'clientLogos' },
+                    { label: 'Trust And Tools', value: 'trustAndTools' },
+                    { label: 'Related Services', value: 'relatedServices' },
+                    { label: 'FAQs', value: 'faq' },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'FAQs',
           fields: [
             { name: 'faqTitle', type: 'text' },
