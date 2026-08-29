@@ -74,8 +74,22 @@ export default buildConfig({
     },
   }),
   sharp,
-  cors: [process.env.FRONTEND_URL || 'http://localhost:8443'],
-  csrf: [process.env.FRONTEND_URL || 'http://localhost:8443'],
+  // Every real frontend origin that reads this API — production, dev, and
+  // local — needs to be allowed at once; a single FRONTEND_URL value can
+  // only ever satisfy one of them, silently CORS-blocking the others.
+  // FRONTEND_URL (if set) is prepended so it always wins as the primary.
+  cors: [
+    ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+    'https://nexovah.com',
+    'https://dev.nexovah.com',
+    'http://localhost:8443',
+  ],
+  csrf: [
+    ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+    'https://nexovah.com',
+    'https://dev.nexovah.com',
+    'http://localhost:8443',
+  ],
   onInit: async (payload) => {
     // Polls for campaigns whose scheduled send time has arrived. Runs
     // in-process — fine for this app's current scale/deployment shape
