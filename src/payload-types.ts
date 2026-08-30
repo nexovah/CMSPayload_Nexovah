@@ -3371,6 +3371,13 @@ export interface SiteSetting {
      */
     label?: string | null;
   };
+  ctaBannerHeading?: string | null;
+  /**
+   * Plain text — the "Google Cloud, Meta" / "AWS" bold styling on the front end is automatic, not part of this field.
+   */
+  ctaBannerDescription?: string | null;
+  ctaBannerButtonLabel?: string | null;
+  ctaBannerButtonUrl?: string | null;
   ctaBannerBgImage?: (number | null) | Media;
   /**
    * Partner logos shown in the middle of the banner (Google Cloud, Meta, AWS).
@@ -3383,6 +3390,13 @@ export interface SiteSetting {
       }[]
     | null;
   ctaBannerTrustpilotIcon?: (number | null) | Media;
+  caseStudiesSectionHeading?: string | null;
+  caseStudiesSectionButtonLabel?: string | null;
+  caseStudiesSectionButtonUrl?: string | null;
+  toolsSectionHeading?: string | null;
+  toolsSectionDescription?: string | null;
+  toolsSectionButtonLabel?: string | null;
+  toolsSectionButtonUrl?: string | null;
   modalSuccessCheckIcon?: (number | null) | Media;
   modalFormFooterImage?: (number | null) | Media;
   modalSuccessLineImage?: (number | null) | Media;
@@ -3997,6 +4011,10 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         alt?: T;
         label?: T;
       };
+  ctaBannerHeading?: T;
+  ctaBannerDescription?: T;
+  ctaBannerButtonLabel?: T;
+  ctaBannerButtonUrl?: T;
   ctaBannerBgImage?: T;
   ctaBannerLogos?:
     | T
@@ -4006,6 +4024,13 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         id?: T;
       };
   ctaBannerTrustpilotIcon?: T;
+  caseStudiesSectionHeading?: T;
+  caseStudiesSectionButtonLabel?: T;
+  caseStudiesSectionButtonUrl?: T;
+  toolsSectionHeading?: T;
+  toolsSectionDescription?: T;
+  toolsSectionButtonLabel?: T;
+  toolsSectionButtonUrl?: T;
   modalSuccessCheckIcon?: T;
   modalFormFooterImage?: T;
   modalSuccessLineImage?: T;

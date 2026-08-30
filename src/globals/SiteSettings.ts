@@ -256,6 +256,15 @@ export const SiteSettings: GlobalConfig = {
           label: 'CTA Banner',
           description: 'The dark "Ready to get personalised pricing?" banner — shared across Home + Blog (and its dotted background is reused by every Service page).',
           fields: [
+            { name: 'ctaBannerHeading', type: 'text', defaultValue: 'Ready to get personalised and custom pricing?' },
+            {
+              name: 'ctaBannerDescription',
+              type: 'textarea',
+              defaultValue: 'Take your business to the next level with our Google Cloud, Meta and AWS experts.',
+              admin: { description: 'Plain text — the "Google Cloud, Meta" / "AWS" bold styling on the front end is automatic, not part of this field.' },
+            },
+            { name: 'ctaBannerButtonLabel', type: 'text', defaultValue: 'Get a Free Proposal' },
+            { name: 'ctaBannerButtonUrl', type: 'text' },
             { name: 'ctaBannerBgImage', type: 'upload', relationTo: 'media' },
             {
               name: 'ctaBannerLogos',
@@ -267,6 +276,29 @@ export const SiteSettings: GlobalConfig = {
               ],
             },
             { name: 'ctaBannerTrustpilotIcon', type: 'upload', relationTo: 'media' },
+          ],
+        },
+        {
+          label: 'Case Studies Section',
+          description: 'The "Accelerate your Business Success, just like our clients" heading + button — shared wherever the Case Studies row appears (Home + every Service page).',
+          fields: [
+            { name: 'caseStudiesSectionHeading', type: 'text', defaultValue: 'Accelerate your Business Success, just like our clients' },
+            { name: 'caseStudiesSectionButtonLabel', type: 'text', defaultValue: 'Explore More' },
+            { name: 'caseStudiesSectionButtonUrl', type: 'text' },
+          ],
+        },
+        {
+          label: 'Tools & Technologies Section',
+          description: 'The "Tools and technologies we use" heading/description/button — shared wherever that badge-grid section appears (Home + every Service page). Not to be confused with the "Trust And Tools" tab, which is a different section.',
+          fields: [
+            { name: 'toolsSectionHeading', type: 'text', defaultValue: 'Tools and technologies we use' },
+            {
+              name: 'toolsSectionDescription',
+              type: 'textarea',
+              defaultValue: 'We leverage the latest design and development tools to craft stunning user experiences with exceptional functionality.',
+            },
+            { name: 'toolsSectionButtonLabel', type: 'text', defaultValue: 'Explore More' },
+            { name: 'toolsSectionButtonUrl', type: 'text' },
           ],
         },
         {
