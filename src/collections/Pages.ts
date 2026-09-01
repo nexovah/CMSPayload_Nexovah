@@ -240,6 +240,12 @@ export const Pages: CollectionConfig = {
             { name: 'dmwFormBusinessPlaceholder', type: 'text', defaultValue: 'Enter business name' },
             { name: 'dmwFormDescPlaceholder', type: 'text', defaultValue: 'Describe your business, enter products, services, specialty to get best website' },
             { name: 'dmwFormButtonLabel', type: 'text', defaultValue: 'Get My Website' },
+            {
+              name: 'dmwFormButtonIcon',
+              type: 'upload',
+              relationTo: 'media',
+              admin: { description: 'Icon shown on the left of the "Get My Website" button — used on both Step 1 and Step 2.' },
+            },
 
             // Step 2 — "Continue to Chat with Us"
             { name: 'dmwStep2Heading', type: 'text', defaultValue: 'Continue to Chat with Us' },
@@ -287,6 +293,24 @@ export const Pages: CollectionConfig = {
               ],
             },
 
+            // How It Works — two full-width steps, right after the client-logo scroll
+            { name: 'dmwHowItWorksHeading', type: 'text', defaultValue: 'How it Works' },
+            {
+              name: 'dmwHowItWorksSteps',
+              type: 'array',
+              label: 'How It Works — Steps',
+              labels: { singular: 'Step', plural: 'Steps' },
+              minRows: 0,
+              maxRows: 2,
+              admin: { description: 'Exactly 2 rows — each becomes one full-width card. Row order = display order (01, 02...).' },
+              fields: [
+                { name: 'heading', type: 'text', required: true },
+                { name: 'description', type: 'textarea', required: true },
+                { name: 'image', type: 'upload', relationTo: 'media', required: true, admin: { description: 'The device/screen mockup shown on the right side of this card.' } },
+                { name: 'backgroundImage', type: 'upload', relationTo: 'media', admin: { description: 'The decorative mint-green card background with swirl lines. Leave empty to use the site default.' } },
+              ],
+            },
+
             // The Nexovah Advantage
             { name: 'dmwAdvantageHeading', type: 'text', defaultValue: 'The Nexovah Advantage' },
             {
@@ -321,6 +345,21 @@ export const Pages: CollectionConfig = {
               fields: [{ name: 'text', type: 'text', required: true }],
             },
 
+            // Case Studies — static, non-clickable showcase cards (no links, no
+            // "Explore More" button) so this landing page never routes a
+            // visitor away mid-form. Same card design as the service pages'
+            // Case Studies section.
+            { name: 'dmwCaseStudiesHeading', type: 'text', defaultValue: 'Case Studies for Business Success' },
+            {
+              name: 'dmwCaseStudies',
+              type: 'relationship',
+              relationTo: 'showcases',
+              hasMany: true,
+              label: 'Case Studies to Feature',
+              maxRows: 3,
+              admin: { description: 'Pick up to 3 case studies. Leave empty to hide this section.' },
+            },
+
             // Agency Partnerships
             { name: 'dmwAgencyHeadingPrefix', type: 'text', defaultValue: 'Agency', admin: { description: 'Rendered in dark text.' } },
             { name: 'dmwAgencyHeadingHighlight', type: 'text', defaultValue: 'Partnerships', admin: { description: 'Rendered in brand green.' } },
@@ -348,6 +387,24 @@ export const Pages: CollectionConfig = {
 
             // Sticky bottom bar
             { name: 'dmwStickyBarLabel', type: 'text', defaultValue: 'Try for FREE' },
+
+            // Post-submit WhatsApp handoff — deliberately a separate raw number
+            // from the sitewide footer WhatsApp button, which is a wa.link
+            // shortener that ignores a ?text= override and always opens with
+            // its own baked-in message. This page needs its own pre-filled
+            // text, so it builds a direct wa.me link instead.
+            {
+              name: 'dmwWhatsappNumber',
+              type: 'text',
+              defaultValue: '918100388080',
+              admin: { description: 'Raw WhatsApp number with country code, digits only (no +, spaces, or dashes) — e.g. 918100388080. Used to build the post-submit WhatsApp redirect link with a pre-filled message.' },
+            },
+            {
+              name: 'dmwWhatsappMessage',
+              type: 'textarea',
+              defaultValue: 'Hi, I saw your Meta Ad and I’m interested in getting a website built for my business.',
+              admin: { description: 'Pre-filled message that appears in the WhatsApp chat box after a lead submits the form.' },
+            },
           ],
         },
         {

@@ -398,6 +398,10 @@ export interface Page {
   dmwFormBusinessPlaceholder?: string | null;
   dmwFormDescPlaceholder?: string | null;
   dmwFormButtonLabel?: string | null;
+  /**
+   * Icon shown on the left of the "Get My Website" button — used on both Step 1 and Step 2.
+   */
+  dmwFormButtonIcon?: (number | null) | Media;
   dmwStep2Heading?: string | null;
   dmwStep2Subheading?: string | null;
   dmwStep2PhonePlaceholder?: string | null;
@@ -433,6 +437,25 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  dmwHowItWorksHeading?: string | null;
+  /**
+   * Exactly 2 rows — each becomes one full-width card. Row order = display order (01, 02...).
+   */
+  dmwHowItWorksSteps?:
+    | {
+        heading: string;
+        description: string;
+        /**
+         * The device/screen mockup shown on the right side of this card.
+         */
+        image: number | Media;
+        /**
+         * The decorative mint-green card background with swirl lines. Leave empty to use the site default.
+         */
+        backgroundImage?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   dmwAdvantageHeading?: string | null;
   dmwAdvantageCards?:
     | {
@@ -464,6 +487,11 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  dmwCaseStudiesHeading?: string | null;
+  /**
+   * Pick up to 3 case studies. Leave empty to hide this section.
+   */
+  dmwCaseStudies?: (number | Showcase)[] | null;
   /**
    * Rendered in dark text.
    */
@@ -492,6 +520,14 @@ export interface Page {
       }[]
     | null;
   dmwStickyBarLabel?: string | null;
+  /**
+   * Raw WhatsApp number with country code, digits only (no +, spaces, or dashes) — e.g. 918100388080. Used to build the post-submit WhatsApp redirect link with a pre-filled message.
+   */
+  dmwWhatsappNumber?: string | null;
+  /**
+   * Pre-filled message that appears in the WhatsApp chat box after a lead submits the form.
+   */
+  dmwWhatsappMessage?: string | null;
   getInTouchHeading?: string | null;
   getInTouchDescription?: string | null;
   getInTouchEmailLabel?: string | null;
@@ -2055,6 +2091,7 @@ export interface PagesSelect<T extends boolean = true> {
   dmwFormBusinessPlaceholder?: T;
   dmwFormDescPlaceholder?: T;
   dmwFormButtonLabel?: T;
+  dmwFormButtonIcon?: T;
   dmwStep2Heading?: T;
   dmwStep2Subheading?: T;
   dmwStep2PhonePlaceholder?: T;
@@ -2090,6 +2127,16 @@ export interface PagesSelect<T extends boolean = true> {
         company?: T;
         id?: T;
       };
+  dmwHowItWorksHeading?: T;
+  dmwHowItWorksSteps?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        image?: T;
+        backgroundImage?: T;
+        id?: T;
+      };
   dmwAdvantageHeading?: T;
   dmwAdvantageCards?:
     | T
@@ -2121,6 +2168,8 @@ export interface PagesSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  dmwCaseStudiesHeading?: T;
+  dmwCaseStudies?: T;
   dmwAgencyHeadingPrefix?: T;
   dmwAgencyHeadingHighlight?: T;
   dmwAgencyDescription?: T;
@@ -2143,6 +2192,8 @@ export interface PagesSelect<T extends boolean = true> {
         id?: T;
       };
   dmwStickyBarLabel?: T;
+  dmwWhatsappNumber?: T;
+  dmwWhatsappMessage?: T;
   getInTouchHeading?: T;
   getInTouchDescription?: T;
   getInTouchEmailLabel?: T;
