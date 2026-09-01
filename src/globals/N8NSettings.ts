@@ -62,7 +62,7 @@ export const N8NSettings: GlobalConfig = {
             { label: 'Timeline (days)', value: 'timelineDays' },
             { label: 'Budget Currency', value: 'budgetCurrency' },
             { label: 'Budget', value: 'budget' },
-            { label: 'Message / Project Scope', value: 'message' },
+            { label: 'Message / Project Scope / Describe Your Business', value: 'message' },
             { label: 'Source Page', value: 'sourcePage' },
             { label: 'UTM Source', value: 'utmSource' },
             { label: 'UTM Medium', value: 'utmMedium' },
