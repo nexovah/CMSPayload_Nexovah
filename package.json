@@ -20,6 +20,7 @@
     "next": "^16.2.12",
     "nodemailer": "^9.0.5",
     "payload": "^3.86.0",
+    "razorpay": "^2.9.8",
     "react": "^19.2.8",
     "react-colorful": "^5.8.0",
     "react-dom": "^19.2.8",

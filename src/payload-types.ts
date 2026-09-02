@@ -74,6 +74,9 @@ export interface Config {
     showcases: Showcase;
     blogs: Blog;
     leads: Lead;
+    orders: Order;
+    products: Product;
+    customers: Customer;
     contacts: Contact;
     newsletter: Newsletter;
     'lead-sources': LeadSource;
@@ -106,6 +109,9 @@ export interface Config {
     showcases: ShowcasesSelect<false> | ShowcasesSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    customers: CustomersSelect<false> | CustomersSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
     newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
     'lead-sources': LeadSourcesSelect<false> | LeadSourcesSelect<true>;
@@ -130,11 +136,13 @@ export interface Config {
     'site-settings': SiteSetting;
     'app-settings': AppSetting;
     'n8n-settings': N8NSetting;
+    'expiry-reminders': ExpiryReminder;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     'app-settings': AppSettingsSelect<false> | AppSettingsSelect<true>;
     'n8n-settings': N8NSettingsSelect<false> | N8NSettingsSelect<true>;
+    'expiry-reminders': ExpiryRemindersSelect<false> | ExpiryRemindersSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1496,6 +1504,139 @@ export interface ContactGroup {
   createdAt: string;
 }
 /**
+ * Only status may be changed here (to Cancelled or Refunded) — every other field is set automatically by the payment flow and is not meant to be hand-edited. Cancelling/Refunding is synced to Razorpay — see the beforeChange hook.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: number;
+  /**
+   * Our own platform order id, e.g. NXV-20260902-0001 — distinct from Razorpay's own order id below.
+   */
+  orderNumber: string;
+  /**
+   * To cancel an unpaid order, or refund a paid one: change this to Cancelled / Refunded and save. Refunding calls Razorpay automatically — the save is rejected if Razorpay refuses the refund.
+   */
+  status: 'created' | 'paid' | 'failed' | 'cancelled' | 'refunded';
+  plan: 'monthly' | 'yearly';
+  /**
+   * Amount charged, in ₹ (rupees, not paise).
+   */
+  amount: number;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  razorpayOrderId: string;
+  /**
+   * Populated once payment succeeds.
+   */
+  razorpayPaymentId?: string | null;
+  /**
+   * Stored for audit trail after verification.
+   */
+  razorpaySignature?: string | null;
+  /**
+   * Populated once a refund is processed.
+   */
+  razorpayRefundId?: string | null;
+  /**
+   * Set the moment payment is verified — the plan's validity starts from here.
+   */
+  purchaseDate?: string | null;
+  /**
+   * 30 for Monthly, 365 for Yearly — set automatically from plan.
+   */
+  validityDays?: number | null;
+  /**
+   * purchaseDate + validityDays, computed automatically.
+   */
+  expiryDate?: string | null;
+  /**
+   * The Lead this checkout belongs to.
+   */
+  lead?: (number | null) | Lead;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The two Design My Website payment plans. planKey is fixed — only name, description, price, and status are meant to be edited. Inactive plans are hidden from the Step 3 checkout tabs but can still be attached to a Customer manually.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: number;
+  name: string;
+  /**
+   * Formatted plan description — shown on the Step 3 checkout tab and in expiry-reminder emails. Paste from anywhere; bold/lists/etc are preserved.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  descriptionHtml?: string | null;
+  /**
+   * Active plans show as a tab on Step 3 checkout. Inactive plans are hidden there but can still be attached to a Customer manually (e.g. for a custom payment link).
+   */
+  status: 'active' | 'inactive';
+  /**
+   * Price in ₹ (rupees). This is the amount actually charged via Razorpay.
+   */
+  price: number;
+  billingPeriod: 'monthly' | 'yearly';
+  /**
+   * Only set this for the 2 canonical Design My Website checkout plans (one Monthly, one Yearly — matches the plan key the frontend sends). Leave empty for any other, one-off, or custom manually-sold product — those are never shown on Step 3 checkout and are only ever attached to a Customer by hand.
+   */
+  planKey?: ('monthly' | 'yearly') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Auto-created for every paid checkout. You can also add one manually and attach any package (including Inactive ones) to send a custom payment link.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers".
+ */
+export interface Customer {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  package: number | Product;
+  purchaseDate: string;
+  expiryDate: string;
+  source: 'checkout' | 'manual';
+  /**
+   * The paid Order that created this customer, if any.
+   */
+  order?: (number | null) | Order;
+  remindersSent?: ('7d' | '3d' | '0d')[] | null;
+  /**
+   * Check this and Save to generate a Razorpay Payment Link for this customer's package price and email it to them. Resets to unchecked automatically once sent — check it again any time to send a fresh link.
+   */
+  sendPaymentLinkNow?: boolean | null;
+  /**
+   * The hosted Razorpay payment page URL last sent to this customer.
+   */
+  paymentLinkUrl?: string | null;
+  paymentLinkId?: string | null;
+  paymentLinkStatus?: ('created' | 'paid') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletter".
  */
@@ -1793,6 +1934,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'leads';
         value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'customers';
+        value: number | Customer;
       } | null)
     | ({
         relationTo: 'contacts';
@@ -2870,6 +3023,65 @@ export interface LeadsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
+  status?: T;
+  plan?: T;
+  amount?: T;
+  customerName?: T;
+  customerEmail?: T;
+  customerPhone?: T;
+  razorpayOrderId?: T;
+  razorpayPaymentId?: T;
+  razorpaySignature?: T;
+  razorpayRefundId?: T;
+  purchaseDate?: T;
+  validityDays?: T;
+  expiryDate?: T;
+  lead?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  descriptionHtml?: T;
+  status?: T;
+  price?: T;
+  billingPeriod?: T;
+  planKey?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers_select".
+ */
+export interface CustomersSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  package?: T;
+  purchaseDate?: T;
+  expiryDate?: T;
+  source?: T;
+  order?: T;
+  remindersSent?: T;
+  sendPaymentLinkNow?: T;
+  paymentLinkUrl?: T;
+  paymentLinkId?: T;
+  paymentLinkStatus?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contacts_select".
  */
 export interface ContactsSelect<T extends boolean = true> {
@@ -3833,6 +4045,29 @@ export interface N8NSetting {
   createdAt?: string | null;
 }
 /**
+ * The 3-step email drip sent to Customers as their purchased package approaches expiry — 7 days before, 3 days before, and on the day it expires.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "expiry-reminders".
+ */
+export interface ExpiryReminder {
+  id: number;
+  sevenDayReminder?: {
+    enabled?: boolean | null;
+    template?: (number | null) | CampaignTemplate;
+  };
+  threeDayReminder?: {
+    enabled?: boolean | null;
+    template?: (number | null) | CampaignTemplate;
+  };
+  expiryDayReminder?: {
+    enabled?: boolean | null;
+    template?: (number | null) | CampaignTemplate;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -4226,6 +4461,33 @@ export interface N8NSettingsSelect<T extends boolean = true> {
         label?: T;
         fieldsToSend?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "expiry-reminders_select".
+ */
+export interface ExpiryRemindersSelect<T extends boolean = true> {
+  sevenDayReminder?:
+    | T
+    | {
+        enabled?: T;
+        template?: T;
+      };
+  threeDayReminder?:
+    | T
+    | {
+        enabled?: T;
+        template?: T;
+      };
+  expiryDayReminder?:
+    | T
+    | {
+        enabled?: T;
+        template?: T;
       };
   updatedAt?: T;
   createdAt?: T;

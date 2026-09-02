@@ -12,6 +12,9 @@ import { Services } from './collections/Services'
 import { Showcases } from './collections/Showcases'
 import { Blogs } from './collections/Blogs'
 import { Leads } from './collections/Leads'
+import { Orders } from './collections/Orders'
+import { Products } from './collections/Products'
+import { Customers as SalesCustomers } from './collections/Customers'
 import { Contacts } from './collections/Contacts'
 import { Newsletter } from './collections/Newsletter'
 import { LeadSources } from './collections/LeadSources'
@@ -26,12 +29,17 @@ import { Redirects } from './collections/Redirects'
 import { SiteSettings } from './globals/SiteSettings'
 import { AppSettings } from './globals/AppSettings'
 import { N8NSettings } from './globals/N8NSettings'
+import { ExpiryReminders } from './globals/ExpiryReminders'
 import { runDueScheduledCampaigns, resumeDailyLimitPausedCampaigns } from './lib/campaignSend'
 import { runDueAutomationSteps } from './lib/automationSend'
+import { runDueExpiryReminders } from './lib/expiryReminders'
+import { createOrderEndpoint, verifyPaymentEndpoint } from './endpoints/razorpay'
+import { razorpayWebhookEndpoint } from './endpoints/razorpayWebhook'
 
 const SCHEDULED_CAMPAIGN_CHECK_INTERVAL_MS = 60_000
 const AUTOMATION_STEP_CHECK_INTERVAL_MS = 60_000
 const DAILY_LIMIT_RESUME_CHECK_INTERVAL_MS = 60_000
+const EXPIRY_REMINDER_CHECK_INTERVAL_MS = 60_000
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,6 +58,9 @@ export default buildConfig({
     Showcases,
     Blogs,
     Leads,
+    Orders,
+    Products,
+    SalesCustomers,
     Contacts,
     Newsletter,
     LeadSources,
@@ -62,7 +73,8 @@ export default buildConfig({
     Categories,
     Redirects,
   ],
-  globals: [SiteSettings, AppSettings, N8NSettings],
+  globals: [SiteSettings, AppSettings, N8NSettings, ExpiryReminders],
+  endpoints: [createOrderEndpoint, verifyPaymentEndpoint, razorpayWebhookEndpoint],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -110,5 +122,12 @@ export default buildConfig({
     setInterval(() => {
       resumeDailyLimitPausedCampaigns(payload).catch((err) => payload.logger.error(`Daily-limit resume check failed: ${err instanceof Error ? err.message : err}`))
     }, DAILY_LIMIT_RESUME_CHECK_INTERVAL_MS)
+
+    // Polls Customers for whoever's package expiry falls exactly 7 days, 3
+    // days, or 0 days (today) from now, sending the matching configured
+    // reminder template. Same in-process caveat as the others above.
+    setInterval(() => {
+      runDueExpiryReminders(payload).catch((err) => payload.logger.error(`Expiry reminder check failed: ${err instanceof Error ? err.message : err}`))
+    }, EXPIRY_REMINDER_CHECK_INTERVAL_MS)
   },
 })

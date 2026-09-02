@@ -21,6 +21,8 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { OrderStatusCell as OrderStatusCell_ee62761a0fe91d1055e1c267fdbd0157 } from '../../../components/admin/orders/OrderStatusCell'
+import { StatusConfirmField as StatusConfirmField_8d4f3a14d096a4b180bb5304c0509521 } from '../../../components/admin/orders/StatusConfirmField'
 import { CampaignTypeField as CampaignTypeField_7cf9a08a0db445475900e8a220807a3e } from '../../../components/admin/campaigns/CampaignTypeField'
 import { ContactGroupCell as ContactGroupCell_73a8381e34d2aa537767f5f3a0bf6626 } from '../../../components/admin/campaigns/ContactGroupCell'
 import { AutomationStepsField as AutomationStepsField_e370394b55f24c83e8a2c9d079f51369 } from '../../../components/admin/campaigns/AutomationStepsField'
@@ -68,6 +70,8 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "/components/admin/orders/OrderStatusCell#OrderStatusCell": OrderStatusCell_ee62761a0fe91d1055e1c267fdbd0157,
+  "/components/admin/orders/StatusConfirmField#StatusConfirmField": StatusConfirmField_8d4f3a14d096a4b180bb5304c0509521,
   "/components/admin/campaigns/CampaignTypeField#CampaignTypeField": CampaignTypeField_7cf9a08a0db445475900e8a220807a3e,
   "/components/admin/campaigns/ContactGroupCell#ContactGroupCell": ContactGroupCell_73a8381e34d2aa537767f5f3a0bf6626,
   "/components/admin/campaigns/AutomationStepsField#AutomationStepsField": AutomationStepsField_e370394b55f24c83e8a2c9d079f51369,
