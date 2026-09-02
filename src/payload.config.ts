@@ -30,6 +30,7 @@ import { SiteSettings } from './globals/SiteSettings'
 import { AppSettings } from './globals/AppSettings'
 import { N8NSettings } from './globals/N8NSettings'
 import { ExpiryReminders } from './globals/ExpiryReminders'
+import { PaymentGateway } from './globals/PaymentGateway'
 import { runDueScheduledCampaigns, resumeDailyLimitPausedCampaigns } from './lib/campaignSend'
 import { runDueAutomationSteps } from './lib/automationSend'
 import { runDueExpiryReminders } from './lib/expiryReminders'
@@ -73,7 +74,7 @@ export default buildConfig({
     Categories,
     Redirects,
   ],
-  globals: [SiteSettings, AppSettings, N8NSettings, ExpiryReminders],
+  globals: [SiteSettings, AppSettings, N8NSettings, ExpiryReminders, PaymentGateway],
   endpoints: [createOrderEndpoint, verifyPaymentEndpoint, razorpayWebhookEndpoint],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

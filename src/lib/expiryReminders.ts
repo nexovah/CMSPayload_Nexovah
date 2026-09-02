@@ -1,6 +1,7 @@
 import type { Payload } from 'payload'
 import Razorpay from 'razorpay'
 import { sendEmail } from './sendEmail'
+import { getRazorpayCredentials } from './razorpayCredentials'
 
 const PLAN_LABELS: Record<string, string> = {
   monthly: '₹399 / 1 Month',
@@ -43,12 +44,11 @@ async function createRenewalLink(
   customer: { id: number | string; name: string; email: string; phone: string },
   pkg: { name: string; price: number } | null,
 ): Promise<string> {
-  const key_id = process.env.RAZORPAY_KEY_ID
-  const key_secret = process.env.RAZORPAY_KEY_SECRET
-  if (!key_id || !key_secret || !pkg) return ''
+  const creds = await getRazorpayCredentials(payload)
+  if (!creds || !pkg) return ''
 
   try {
-    const client = new Razorpay({ key_id, key_secret })
+    const client = new Razorpay({ key_id: creds.key_id, key_secret: creds.key_secret })
     const link = await client.paymentLink.create({
       amount: Math.round(pkg.price * 100),
       currency: 'INR',

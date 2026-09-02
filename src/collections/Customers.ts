@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import Razorpay from 'razorpay'
 import { sendEmail } from '../lib/sendEmail'
+import { getRazorpayCredentials } from '../lib/razorpayCredentials'
 
 // Every paying customer from Design My Website's checkout lands here
 // automatically (created the moment /api/verify-payment succeeds), mirroring
@@ -80,16 +81,15 @@ export const Customers: CollectionConfig = {
         if (operation !== 'update' || !originalDoc || context?.internalPaymentFlow) return data
         if (!data.sendPaymentLinkNow || originalDoc.sendPaymentLinkNow) return data // only fires on the true transition, not every save
 
-        const key_id = process.env.RAZORPAY_KEY_ID
-        const key_secret = process.env.RAZORPAY_KEY_SECRET
-        if (!key_id || !key_secret) {
-          throw new Error('RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET not configured — cannot create a payment link.')
+        const creds = await getRazorpayCredentials(req.payload)
+        if (!creds) {
+          throw new Error('Razorpay credentials not configured — set them in Sales → Payment Gateway.')
         }
 
         const pkg = await req.payload.findByID({ collection: 'products', id: data.package ?? originalDoc.package })
         if (!pkg) throw new Error('This customer has no package attached — attach one before sending a payment link.')
 
-        const client = new Razorpay({ key_id, key_secret })
+        const client = new Razorpay({ key_id: creds.key_id, key_secret: creds.key_secret })
         const paymentLink = await client.paymentLink.create({
           amount: Math.round(pkg.price * 100),
           currency: 'INR',

@@ -2,6 +2,7 @@ import type { Endpoint } from 'payload'
 import crypto from 'crypto'
 import Razorpay from 'razorpay'
 import { sendOrderConfirmationEmails } from '../lib/orderConfirmation'
+import { getRazorpayCredentials } from '../lib/razorpayCredentials'
 
 // Design My Website's Step 3 payment — two fixed plans. The amount is
 // decided here, server-side — never trusted from the browser. Prices come
@@ -36,11 +37,10 @@ async function resolvePlan(
   return { amountPaise: PLAN_FALLBACK_AMOUNTS_PAISE[plan], status: 'unknown' }
 }
 
-function razorpayClient() {
-  const key_id = process.env.RAZORPAY_KEY_ID
-  const key_secret = process.env.RAZORPAY_KEY_SECRET
-  if (!key_id || !key_secret) throw new Error('RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET not configured')
-  return new Razorpay({ key_id, key_secret })
+async function razorpayClient(payload: Parameters<Endpoint['handler']>[0]['payload']) {
+  const creds = await getRazorpayCredentials(payload)
+  if (!creds) throw new Error('Razorpay credentials not configured — set them in Sales → Payment Gateway.')
+  return { client: new Razorpay({ key_id: creds.key_id, key_secret: creds.key_secret }), creds }
 }
 
 function generateOrderNumber(): string {
@@ -89,7 +89,7 @@ export const createOrderEndpoint: Endpoint = {
     const orderNumber = generateOrderNumber()
 
     try {
-      const client = razorpayClient()
+      const { client } = await razorpayClient(req.payload)
       const razorpayOrder = await client.orders.create({
         amount: amountPaise,
         currency: 'INR',
@@ -143,14 +143,14 @@ export const verifyPaymentEndpoint: Endpoint = {
       return Response.json({ error: 'Missing razorpay_order_id, razorpay_payment_id, or razorpay_signature.' }, { status: 400 })
     }
 
-    const keySecret = process.env.RAZORPAY_KEY_SECRET
-    if (!keySecret) {
-      req.payload.logger.error('verify-payment: RAZORPAY_KEY_SECRET not configured')
+    const creds = await getRazorpayCredentials(req.payload)
+    if (!creds) {
+      req.payload.logger.error('verify-payment: Razorpay credentials not configured — set them in Sales → Payment Gateway.')
       return Response.json({ error: 'Payment verification not configured.' }, { status: 500 })
     }
 
     const expectedSignature = crypto
-      .createHmac('sha256', keySecret)
+      .createHmac('sha256', creds.key_secret)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest('hex')
 

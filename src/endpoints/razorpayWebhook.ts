@@ -1,6 +1,7 @@
 import type { Endpoint } from 'payload'
 import crypto from 'crypto'
 import { sendOrderConfirmationEmails } from '../lib/orderConfirmation'
+import { getRazorpayCredentials } from '../lib/razorpayCredentials'
 
 const PLAN_VALIDITY_DAYS: Record<string, number> = { monthly: 30, yearly: 365 }
 
@@ -16,9 +17,8 @@ function generateOrderNumber(): string {
 // POST /api/razorpay-webhook
 // Registered in your Razorpay Dashboard -> Settings -> Webhooks, pointed at
 // this URL, with the "payment_link.paid" event checked. Requires
-// RAZORPAY_WEBHOOK_SECRET (the secret you set when creating the webhook in
-// the dashboard — separate from RAZORPAY_KEY_SECRET) in .env, or every
-// request is rejected.
+// the Webhook Secret set in Sales -> Payment Gateway (whichever mode —
+// Test/Live — is currently active there), or every request is rejected.
 //
 // This is how a customer paying via a custom Payment Link (sent from a
 // Customer's "Send Payment Link" action) gets automatically reconciled —
@@ -29,9 +29,10 @@ export const razorpayWebhookEndpoint: Endpoint = {
   path: '/razorpay-webhook',
   method: 'post',
   handler: async (req) => {
-    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET
+    const creds = await getRazorpayCredentials(req.payload)
+    const webhookSecret = creds?.webhook_secret
     if (!webhookSecret) {
-      req.payload.logger.error('razorpay-webhook: RAZORPAY_WEBHOOK_SECRET not configured — rejecting.')
+      req.payload.logger.error('razorpay-webhook: Webhook Secret not configured in Sales → Payment Gateway — rejecting.')
       return Response.json({ error: 'Webhook not configured.' }, { status: 500 })
     }
 

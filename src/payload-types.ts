@@ -137,12 +137,14 @@ export interface Config {
     'app-settings': AppSetting;
     'n8n-settings': N8NSetting;
     'expiry-reminders': ExpiryReminder;
+    'payment-gateway': PaymentGateway;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     'app-settings': AppSettingsSelect<false> | AppSettingsSelect<true>;
     'n8n-settings': N8NSettingsSelect<false> | N8NSettingsSelect<true>;
     'expiry-reminders': ExpiryRemindersSelect<false> | ExpiryRemindersSelect<true>;
+    'payment-gateway': PaymentGatewaySelect<false> | PaymentGatewaySelect<true>;
   };
   locale: null;
   widgets: {
@@ -4068,6 +4070,43 @@ export interface ExpiryReminder {
   createdAt?: string | null;
 }
 /**
+ * Razorpay credentials for the Design My Website checkout. Flip "Live Mode" on only once you've tested with the Test Mode credentials below — while off, every payment (checkout, refunds, renewal links, webhook) uses Test Mode, no matter what's filled into Live Mode.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-gateway".
+ */
+export interface PaymentGateway {
+  id: number;
+  /**
+   * Off = Test Mode credentials are used everywhere. On = Live Mode credentials are used everywhere. Real money only moves when this is on.
+   */
+  liveMode?: boolean | null;
+  /**
+   * From Razorpay Dashboard → toggle to Test Mode → Settings → API Keys.
+   */
+  testMode?: {
+    keyId?: string | null;
+    keySecret?: string | null;
+    /**
+     * From Razorpay Dashboard (Test Mode) → Settings → Webhooks → your webhook pointing at /api/razorpay-webhook.
+     */
+    webhookSecret?: string | null;
+  };
+  /**
+   * From Razorpay Dashboard → toggle to Live Mode → Settings → API Keys.
+   */
+  liveModeCredentials?: {
+    keyId?: string | null;
+    keySecret?: string | null;
+    /**
+     * From Razorpay Dashboard (Live Mode) → Settings → Webhooks → your webhook pointing at /api/razorpay-webhook.
+     */
+    webhookSecret?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -4488,6 +4527,30 @@ export interface ExpiryRemindersSelect<T extends boolean = true> {
     | {
         enabled?: T;
         template?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-gateway_select".
+ */
+export interface PaymentGatewaySelect<T extends boolean = true> {
+  liveMode?: T;
+  testMode?:
+    | T
+    | {
+        keyId?: T;
+        keySecret?: T;
+        webhookSecret?: T;
+      };
+  liveModeCredentials?:
+    | T
+    | {
+        keyId?: T;
+        keySecret?: T;
+        webhookSecret?: T;
       };
   updatedAt?: T;
   createdAt?: T;

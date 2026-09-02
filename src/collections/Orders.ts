@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import Razorpay from 'razorpay'
+import { getRazorpayCredentials } from '../lib/razorpayCredentials'
 
 // Razorpay checkout orders from the Design My Website payment step — a
 // dedicated "Order" record (separate from Leads) that only ever exists once
@@ -127,14 +128,13 @@ export const Orders: CollectionConfig = {
             throw new Error('No Razorpay payment id on this order — cannot refund.')
           }
 
-          const key_id = process.env.RAZORPAY_KEY_ID
-          const key_secret = process.env.RAZORPAY_KEY_SECRET
-          if (!key_id || !key_secret) {
-            throw new Error('RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET not configured — cannot process refund.')
+          const creds = await getRazorpayCredentials(req.payload)
+          if (!creds) {
+            throw new Error('Razorpay credentials not configured — set them in Sales → Payment Gateway.')
           }
 
           try {
-            const client = new Razorpay({ key_id, key_secret })
+            const client = new Razorpay({ key_id: creds.key_id, key_secret: creds.key_secret })
             const refund = await client.payments.refund(originalDoc.razorpayPaymentId, {})
             req.payload.logger.info(`Order ${originalDoc.orderNumber} refunded via Razorpay (refund ${refund.id}).`)
             return { ...originalDoc, status: 'refunded', razorpayRefundId: refund.id }
