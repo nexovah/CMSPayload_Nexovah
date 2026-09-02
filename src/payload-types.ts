@@ -1390,6 +1390,10 @@ export interface Lead {
   utmSource?: string | null;
   utmMedium?: string | null;
   utmCampaign?: string | null;
+  /**
+   * Client-generated id sent with the form submission — reused as the Meta Pixel event_id so the browser-side fbq('track', 'Lead') and this server-side Conversions API send get deduplicated as one event, not counted twice.
+   */
+  metaEventId?: string | null;
   contact?: (number | null) | Contact;
   /**
    * Internal note — not shown to the lead/contact.
@@ -3018,6 +3022,7 @@ export interface LeadsSelect<T extends boolean = true> {
   utmSource?: T;
   utmMedium?: T;
   utmCampaign?: T;
+  metaEventId?: T;
   contact?: T;
   note?: T;
   updatedAt?: T;
@@ -3667,6 +3672,14 @@ export interface SiteSetting {
   modalSuccessLineImage?: (number | null) | Media;
   ga4Id?: string | null;
   metaPixelId?: string | null;
+  /**
+   * From Meta Events Manager → this Pixel → Settings → Conversions API → Generate Access Token. Server-side only — never exposed to the browser. Currently used for the Design My Website form's Lead event.
+   */
+  metaCapiAccessToken?: string | null;
+  /**
+   * Paste the code from Events Manager → Test Events while verifying setup, so server-side events show up there instead of your real dataset. Remove it once you've confirmed events arrive correctly.
+   */
+  metaCapiTestEventCode?: string | null;
   robotsTxt?: string | null;
   sitemapHeading?: string | null;
   /**
@@ -4361,6 +4374,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   modalSuccessLineImage?: T;
   ga4Id?: T;
   metaPixelId?: T;
+  metaCapiAccessToken?: T;
+  metaCapiTestEventCode?: T;
   robotsTxt?: T;
   sitemapHeading?: T;
   sitemapIntro?: T;

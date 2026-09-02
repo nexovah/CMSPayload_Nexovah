@@ -315,6 +315,26 @@ export const SiteSettings: GlobalConfig = {
           fields: [
             { name: 'ga4Id', type: 'text' },
             { name: 'metaPixelId', type: 'text' },
+            {
+              name: 'metaCapiAccessToken',
+              type: 'text',
+              label: 'Meta Conversions API Access Token',
+              access: { read: ({ req }) => Boolean(req.user) }, // this whole global is public-readable — this one field isn't, since it's a secret
+              admin: {
+                description:
+                  'From Meta Events Manager → this Pixel → Settings → Conversions API → Generate Access Token. Server-side only — never exposed to the browser. Currently used for the Design My Website form\'s Lead event.',
+              },
+            },
+            {
+              name: 'metaCapiTestEventCode',
+              type: 'text',
+              label: 'Meta Test Event Code (optional)',
+              access: { read: ({ req }) => Boolean(req.user) },
+              admin: {
+                description:
+                  'Paste the code from Events Manager → Test Events while verifying setup, so server-side events show up there instead of your real dataset. Remove it once you\'ve confirmed events arrive correctly.',
+              },
+            },
             { name: 'robotsTxt', type: 'textarea' },
           ],
         },

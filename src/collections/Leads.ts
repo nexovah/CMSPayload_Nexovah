@@ -3,6 +3,7 @@ import { syncContactAfterLeadChange } from '../hooks/syncContact'
 import { defaultLeadSourceToWebsite } from '../hooks/defaultLeadSource'
 import { sendLeadAutoReply } from '../hooks/sendLeadAutoReply'
 import { forwardLeadToN8n } from '../hooks/n8nWebhook'
+import { sendMetaLeadCapiEvent } from '../hooks/metaCapi'
 
 // The "CRM" — every Contact form + Get a Quote form submission lands here,
 // tagged by formType so the two are filterable without needing two collections.
@@ -113,11 +114,19 @@ export const Leads: CollectionConfig = {
     { name: 'utmSource', type: 'text' },
     { name: 'utmMedium', type: 'text' },
     { name: 'utmCampaign', type: 'text' },
+    {
+      name: 'metaEventId',
+      type: 'text',
+      admin: {
+        hidden: true,
+        description: 'Client-generated id sent with the form submission — reused as the Meta Pixel event_id so the browser-side fbq(\'track\', \'Lead\') and this server-side Conversions API send get deduplicated as one event, not counted twice.',
+      },
+    },
     { name: 'contact', type: 'relationship', relationTo: 'contacts', admin: { readOnly: true } },
     { name: 'note', type: 'richText', admin: { description: 'Internal note — not shown to the lead/contact.' } },
   ],
   hooks: {
     beforeChange: [defaultLeadSourceToWebsite],
-    afterChange: [syncContactAfterLeadChange, sendLeadAutoReply, forwardLeadToN8n],
+    afterChange: [syncContactAfterLeadChange, sendLeadAutoReply, forwardLeadToN8n, sendMetaLeadCapiEvent],
   },
 }
