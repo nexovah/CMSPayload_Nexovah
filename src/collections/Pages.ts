@@ -254,6 +254,28 @@ export const Pages: CollectionConfig = {
             { name: 'dmwStep2NamePlaceholder', type: 'text', defaultValue: 'Enter Your Name' },
             { name: 'dmwStep2EmailPlaceholder', type: 'text', defaultValue: 'Your Email Address' },
             { name: 'dmwStep2ButtonLabel', type: 'text', defaultValue: 'Get My Website' },
+            {
+              name: 'dmwStep2DisclaimerBold',
+              type: 'text',
+              defaultValue: 'Get your custom website preview plan',
+              label: 'Step 2 Disclaimer — Bold Lead-in',
+              admin: { description: 'The bold opening phrase of the paragraph shown under the Step 2 button.' },
+            },
+            {
+              name: 'dmwStep2DisclaimerRest',
+              type: 'textarea',
+              defaultValue:
+                "on a temporary link for 1 month in WhatsApp. After your payment confirmation of ₹4,999 INR, we'll purchase your personalised business domain and upload the website for 1 year.",
+              label: 'Step 2 Disclaimer — Rest of the Paragraph',
+              admin: { description: 'Continues directly after the bold lead-in above, same paragraph.' },
+            },
+            {
+              name: 'dmwStep2ConsentText',
+              type: 'text',
+              defaultValue: 'By continuing you indicate that you have read and agree to our',
+              label: 'Step 2 Consent Line',
+              admin: { description: 'Shown below the disclaimer, followed by the Terms of Services / Privacy Policy links (those links are fixed, not editable here).' },
+            },
 
             // Pricing comparison table
             { name: 'dmwPricingHeading', type: 'text', defaultValue: 'Build your Business, not just a Website' },

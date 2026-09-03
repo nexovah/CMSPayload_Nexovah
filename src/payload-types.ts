@@ -418,6 +418,18 @@ export interface Page {
   dmwStep2NamePlaceholder?: string | null;
   dmwStep2EmailPlaceholder?: string | null;
   dmwStep2ButtonLabel?: string | null;
+  /**
+   * The bold opening phrase of the paragraph shown under the Step 2 button.
+   */
+  dmwStep2DisclaimerBold?: string | null;
+  /**
+   * Continues directly after the bold lead-in above, same paragraph.
+   */
+  dmwStep2DisclaimerRest?: string | null;
+  /**
+   * Shown below the disclaimer, followed by the Terms of Services / Privacy Policy links (those links are fixed, not editable here).
+   */
+  dmwStep2ConsentText?: string | null;
   dmwPricingHeading?: string | null;
   dmwPricingSections?:
     | {
@@ -2257,6 +2269,9 @@ export interface PagesSelect<T extends boolean = true> {
   dmwStep2NamePlaceholder?: T;
   dmwStep2EmailPlaceholder?: T;
   dmwStep2ButtonLabel?: T;
+  dmwStep2DisclaimerBold?: T;
+  dmwStep2DisclaimerRest?: T;
+  dmwStep2ConsentText?: T;
   dmwPricingHeading?: T;
   dmwPricingSections?:
     | T
