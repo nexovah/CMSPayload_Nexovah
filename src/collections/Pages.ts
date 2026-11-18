@@ -242,6 +242,13 @@ export const Pages: CollectionConfig = {
             { name: 'dmwPriceAmount', type: 'text', defaultValue: '₹299' },
             { name: 'dmwPricePeriod', type: 'text', defaultValue: '/month' },
             { name: 'dmwSaveAmount', type: 'text', defaultValue: '₹20,000', admin: { description: 'Shown in the hero savings badge and again above the pricing table.' } },
+            {
+              name: 'dmwHostingFreeBadgeText',
+              type: 'text',
+              defaultValue: '1 Year Hosting FREE',
+              label: 'Hosting-Free Note (under the Save badge)',
+              admin: { description: 'Small line shown under the "Save ₹X" badge in the hero price card. Leave blank to hide it.' },
+            },
             { name: 'dmwOnlineStoreLabel', type: 'text', defaultValue: 'Online Store' },
             { name: 'dmwOnlineStorePrice', type: 'text', defaultValue: '+ ₹999 Only' },
             { name: 'dmwTrustText', type: 'text', defaultValue: '350+ Businesses trust Nexovah' },

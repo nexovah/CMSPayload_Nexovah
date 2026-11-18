@@ -407,6 +407,10 @@ export interface Page {
    * Shown in the hero savings badge and again above the pricing table.
    */
   dmwSaveAmount?: string | null;
+  /**
+   * Small line shown under the "Save ₹X" badge in the hero price card. Leave blank to hide it.
+   */
+  dmwHostingFreeBadgeText?: string | null;
   dmwOnlineStoreLabel?: string | null;
   dmwOnlineStorePrice?: string | null;
   dmwTrustText?: string | null;
@@ -2263,6 +2267,7 @@ export interface PagesSelect<T extends boolean = true> {
   dmwPriceAmount?: T;
   dmwPricePeriod?: T;
   dmwSaveAmount?: T;
+  dmwHostingFreeBadgeText?: T;
   dmwOnlineStoreLabel?: T;
   dmwOnlineStorePrice?: T;
   dmwTrustText?: T;
