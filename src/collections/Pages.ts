@@ -220,6 +220,12 @@ export const Pages: CollectionConfig = {
             { name: 'dmwHeroHeadingLine1', type: 'text', defaultValue: 'Complete Website' },
             { name: 'dmwHeroHeadingLine2', type: 'text', defaultValue: '+ Google Business Listing' },
             {
+              name: 'dmwHeroHeadingLine3',
+              type: 'text',
+              label: 'Hero Heading — Line 3 (optional)',
+              admin: { description: 'Optional 3rd line, for when the heading needs more than 2 lines to read well.' },
+            },
+            {
               name: 'dmwPillTags',
               type: 'array',
               label: 'Hero Pill — Tag List',

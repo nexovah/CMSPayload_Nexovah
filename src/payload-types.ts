@@ -386,6 +386,10 @@ export interface Page {
   contactCardBackgroundImage?: (number | null) | Media;
   dmwHeroHeadingLine1?: string | null;
   dmwHeroHeadingLine2?: string | null;
+  /**
+   * Optional 3rd line, for when the heading needs more than 2 lines to read well.
+   */
+  dmwHeroHeadingLine3?: string | null;
   dmwPillTags?:
     | {
         text: string;
@@ -2243,6 +2247,7 @@ export interface PagesSelect<T extends boolean = true> {
   contactCardBackgroundImage?: T;
   dmwHeroHeadingLine1?: T;
   dmwHeroHeadingLine2?: T;
+  dmwHeroHeadingLine3?: T;
   dmwPillTags?:
     | T
     | {
