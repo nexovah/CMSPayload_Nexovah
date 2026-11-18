@@ -232,6 +232,13 @@ export const Pages: CollectionConfig = {
               fields: [{ name: 'text', type: 'text', required: true }],
             },
             { name: 'dmwPillLabel', type: 'text', defaultValue: 'FREE TOOLS' },
+            {
+              name: 'dmwOriginalPriceAmount',
+              type: 'text',
+              defaultValue: '₹29,999',
+              label: 'Price — Original (struck through)',
+              admin: { description: 'Shown struck through above the discounted price, to visually sell the discount. Leave blank to hide the strikethrough entirely.' },
+            },
             { name: 'dmwPriceAmount', type: 'text', defaultValue: '₹299' },
             { name: 'dmwPricePeriod', type: 'text', defaultValue: '/month' },
             { name: 'dmwSaveAmount', type: 'text', defaultValue: '₹20,000', admin: { description: 'Shown in the hero savings badge and again above the pricing table.' } },

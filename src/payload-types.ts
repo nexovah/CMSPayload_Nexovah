@@ -397,6 +397,10 @@ export interface Page {
       }[]
     | null;
   dmwPillLabel?: string | null;
+  /**
+   * Shown struck through above the discounted price, to visually sell the discount. Leave blank to hide the strikethrough entirely.
+   */
+  dmwOriginalPriceAmount?: string | null;
   dmwPriceAmount?: string | null;
   dmwPricePeriod?: string | null;
   /**
@@ -2255,6 +2259,7 @@ export interface PagesSelect<T extends boolean = true> {
         id?: T;
       };
   dmwPillLabel?: T;
+  dmwOriginalPriceAmount?: T;
   dmwPriceAmount?: T;
   dmwPricePeriod?: T;
   dmwSaveAmount?: T;
