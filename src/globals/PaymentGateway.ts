@@ -15,8 +15,11 @@ export const PaymentGateway: GlobalConfig = {
     group: 'Sales',
   },
   access: {
-    read: ({ req }) => Boolean(req.user),
-    update: ({ req }) => Boolean(req.user),
+    // Was readable/writable by any logged-in user regardless of role —
+    // an 'editor' or 'author' account could read or overwrite live
+    // Razorpay secrets via the API. Admin-only now, found in a security review.
+    read: ({ req }) => req.user?.role === 'admin',
+    update: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
     {

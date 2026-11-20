@@ -319,7 +319,7 @@ export const SiteSettings: GlobalConfig = {
               name: 'metaCapiAccessToken',
               type: 'text',
               label: 'Meta Conversions API Access Token',
-              access: { read: ({ req }) => Boolean(req.user) }, // this whole global is public-readable — this one field isn't, since it's a secret
+              access: { read: ({ req }) => req.user?.role === 'admin' }, // this whole global is public-readable — this one field isn't, since it's a secret (admin-only, not just any logged-in user)
               admin: {
                 description:
                   'From Meta Events Manager → this Pixel → Settings → Conversions API → Generate Access Token. Server-side only — never exposed to the browser. Currently used for the Design My Website form\'s Lead event.',

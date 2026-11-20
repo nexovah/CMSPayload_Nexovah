@@ -10,7 +10,15 @@ export const AppSettings: GlobalConfig = {
   admin: {
     description: 'Application-wide backend settings — SMTP, security, media uploads, and more.',
   },
-  access: { read: ({ req }) => Boolean(req.user) },
+  // Was readable (and, since no 'update' was set, implicitly writable) by
+  // any logged-in user regardless of role — this global holds a plaintext
+  // SMTP password, AWS access secret, and OAuth client secret, so an
+  // 'editor'/'author' account could read or overwrite all three via the
+  // API. Admin-only now, found in a security review.
+  access: {
+    read: ({ req }) => req.user?.role === 'admin',
+    update: ({ req }) => req.user?.role === 'admin',
+  },
   fields: [
     {
       name: 'scopeMarker',
