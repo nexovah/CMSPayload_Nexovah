@@ -51,7 +51,15 @@ export const Blogs: CollectionConfig = {
           fields: [
             { name: 'excerpt', type: 'textarea' },
             { name: 'coverImage', type: 'upload', relationTo: 'media' },
-            { name: 'authorName', type: 'text', defaultValue: 'Nexovah Staff' },
+            { name: 'authorName', type: 'text', defaultValue: 'Partha B.' },
+            { name: 'authorTitle', type: 'text', defaultValue: 'Co-Founder, Nexovah' },
+            {
+              name: 'authorBio',
+              type: 'textarea',
+              defaultValue:
+                'Partha B. is Co-Founder of Nexovah, with 10+ years of experience across web design, development, and AI integration — building generative AI-powered agents and automation for businesses.',
+              admin: { description: 'Shown in the post byline and used for Person schema (author E-E-A-T signal).' },
+            },
             { name: 'readTime', type: 'text' },
             { name: 'subtitle', type: 'text' },
             {

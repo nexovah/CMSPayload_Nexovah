@@ -1136,6 +1136,11 @@ export interface Blog {
   excerpt?: string | null;
   coverImage?: (number | null) | Media;
   authorName?: string | null;
+  authorTitle?: string | null;
+  /**
+   * Shown in the post byline and used for Person schema (author E-E-A-T signal).
+   */
+  authorBio?: string | null;
   readTime?: string | null;
   subtitle?: string | null;
   /**
@@ -2845,6 +2850,8 @@ export interface BlogsSelect<T extends boolean = true> {
   excerpt?: T;
   coverImage?: T;
   authorName?: T;
+  authorTitle?: T;
+  authorBio?: T;
   readTime?: T;
   subtitle?: T;
   keyTakeaways?:
