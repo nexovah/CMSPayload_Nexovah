@@ -312,6 +312,13 @@ export const Pages: CollectionConfig = {
                     { name: 'label', type: 'text', required: true },
                     { name: 'other', type: 'text', required: true },
                     { name: 'nexovah', type: 'text', required: true },
+                    {
+                      name: 'highlight',
+                      type: 'checkbox',
+                      defaultValue: false,
+                      label: 'Highlight (exclusive feature)',
+                      admin: { description: 'Marks a row as a standout differentiator competitors don\'t offer — shown with an "Exclusive" badge and emphasis on the page.' },
+                    },
                   ],
                 },
               ],
@@ -319,6 +326,12 @@ export const Pages: CollectionConfig = {
             { name: 'dmwPricingTotalLabel', type: 'text', defaultValue: 'Total / Year' },
             { name: 'dmwPricingTotalOther', type: 'text', defaultValue: '₹25,999' },
             { name: 'dmwPricingTotalNexovah', type: 'text', defaultValue: '₹ 3,999 ONLY!' },
+            {
+              name: 'dmwPricingFootnote',
+              type: 'textarea',
+              label: 'Pricing Table Footnote (T&C)',
+              admin: { description: 'Small print shown directly under the pricing table — e.g. clarifying what\'s included vs a paid add-on.' },
+            },
 
             // Client stories
             { name: 'dmwClientsHeadingLine1', type: 'text', defaultValue: '350+ Businesses' },

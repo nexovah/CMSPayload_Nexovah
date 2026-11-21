@@ -452,6 +452,10 @@ export interface Page {
               label: string;
               other: string;
               nexovah: string;
+              /**
+               * Marks a row as a standout differentiator competitors don't offer — shown with an "Exclusive" badge and emphasis on the page.
+               */
+              highlight?: boolean | null;
               id?: string | null;
             }[]
           | null;
@@ -461,6 +465,10 @@ export interface Page {
   dmwPricingTotalLabel?: string | null;
   dmwPricingTotalOther?: string | null;
   dmwPricingTotalNexovah?: string | null;
+  /**
+   * Small print shown directly under the pricing table — e.g. clarifying what's included vs a paid add-on.
+   */
+  dmwPricingFootnote?: string | null;
   dmwClientsHeadingLine1?: string | null;
   dmwClientsHeadingLine2?: string | null;
   dmwClientStories?:
@@ -2305,6 +2313,7 @@ export interface PagesSelect<T extends boolean = true> {
               label?: T;
               other?: T;
               nexovah?: T;
+              highlight?: T;
               id?: T;
             };
         id?: T;
@@ -2312,6 +2321,7 @@ export interface PagesSelect<T extends boolean = true> {
   dmwPricingTotalLabel?: T;
   dmwPricingTotalOther?: T;
   dmwPricingTotalNexovah?: T;
+  dmwPricingFootnote?: T;
   dmwClientsHeadingLine1?: T;
   dmwClientsHeadingLine2?: T;
   dmwClientStories?:
