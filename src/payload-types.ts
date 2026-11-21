@@ -443,6 +443,15 @@ export interface Page {
    * Shown below the disclaimer, followed by the Terms of Services / Privacy Policy links (those links are fixed, not editable here).
    */
   dmwStep2ConsentText?: string | null;
+  dmwFunnelHeading?: string | null;
+  dmwFunnelSubheading?: string | null;
+  dmwFunnelSteps?:
+    | {
+        heading: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
   dmwPricingHeading?: string | null;
   dmwPricingSections?:
     | {
@@ -2302,6 +2311,15 @@ export interface PagesSelect<T extends boolean = true> {
   dmwStep2DisclaimerBold?: T;
   dmwStep2DisclaimerRest?: T;
   dmwStep2ConsentText?: T;
+  dmwFunnelHeading?: T;
+  dmwFunnelSubheading?: T;
+  dmwFunnelSteps?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        id?: T;
+      };
   dmwPricingHeading?: T;
   dmwPricingSections?:
     | T

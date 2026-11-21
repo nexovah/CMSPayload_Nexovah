@@ -297,6 +297,22 @@ export const Pages: CollectionConfig = {
               admin: { description: 'Shown below the disclaimer, followed by the Terms of Services / Privacy Policy links (those links are fixed, not editable here).' },
             },
 
+            // Automation funnel — "search/social/ads -> site -> form -> instant
+            // auto-reply email + AI WhatsApp follow-up -> booked customer", shown
+            // right after the hero, before the pricing table, so the ₹9,999 price
+            // is justified by the automation it buys, not just a website.
+            { name: 'dmwFunnelHeading', type: 'text', defaultValue: 'Your Website Works Even While You Sleep' },
+            { name: 'dmwFunnelSubheading', type: 'text', defaultValue: 'Every click from Search, Social or Ads becomes a real customer — automatically, with zero manual follow-up.' },
+            {
+              name: 'dmwFunnelSteps',
+              type: 'array',
+              labels: { singular: 'Funnel Step', plural: 'Funnel Steps' },
+              fields: [
+                { name: 'heading', type: 'text', required: true },
+                { name: 'description', type: 'textarea', required: true },
+              ],
+            },
+
             // Pricing comparison table
             { name: 'dmwPricingHeading', type: 'text', defaultValue: 'Build your Business, not just a Website' },
             {
