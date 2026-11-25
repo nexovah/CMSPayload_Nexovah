@@ -22,7 +22,9 @@ export const Leads: CollectionConfig = {
   },
   fields: [
     { name: 'name', type: 'text', required: true },
-    { name: 'email', type: 'email', required: true },
+    // Not required — Design My Website's step 2 makes email optional by
+    // design (WhatsApp number is the real contact channel there).
+    { name: 'email', type: 'email' },
     { name: 'phone', type: 'text' },
     {
       name: 'formType',

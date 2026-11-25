@@ -42,7 +42,7 @@ export const sendMetaLeadCapiEvent: CollectionAfterChangeHook = ({ doc, operatio
             event_source_url: eventUrl,
             action_source: 'website',
             user_data: {
-              em: [sha256(doc.email)],
+              ...(doc.email ? { em: [sha256(doc.email)] } : {}),
               ...(doc.phone ? { ph: [sha256(doc.phone.replace(/[^0-9]/g, ''))] } : {}),
               ...(clientIp ? { client_ip_address: clientIp } : {}),
               ...(userAgent ? { client_user_agent: userAgent } : {}),
