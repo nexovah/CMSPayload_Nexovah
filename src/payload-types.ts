@@ -1387,7 +1387,7 @@ export interface Blog {
 export interface Lead {
   id: number;
   name: string;
-  email: string;
+  email?: string | null;
   phone?: string | null;
   formType: 'contact' | 'quote' | 'design-my-website' | 'crm';
   companyName?: string | null;
@@ -1456,6 +1456,18 @@ export interface Lead {
    * Client-generated id sent with the form submission — reused as the Meta Pixel event_id so the browser-side fbq('track', 'Lead') and this server-side Conversions API send get deduplicated as one event, not counted twice.
    */
   metaEventId?: string | null;
+  /**
+   * Design My Website step 2 — customer explicitly ticked the WhatsApp consent checkbox (required by Meta before a business can message first).
+   */
+  whatsappOptIn?: boolean | null;
+  /**
+   * Timestamp the consent checkbox was ticked, read-only.
+   */
+  optInAt?: string | null;
+  /**
+   * Exact consent label text shown to the customer at the time — kept verbatim for compliance, not re-derived later if the copy changes.
+   */
+  optInText?: string | null;
   contact?: (number | null) | Contact;
   /**
    * Internal note — not shown to the lead/contact.
@@ -3117,6 +3129,9 @@ export interface LeadsSelect<T extends boolean = true> {
   utmMedium?: T;
   utmCampaign?: T;
   metaEventId?: T;
+  whatsappOptIn?: T;
+  optInAt?: T;
+  optInText?: T;
   contact?: T;
   note?: T;
   updatedAt?: T;

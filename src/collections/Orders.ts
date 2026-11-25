@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import Razorpay from 'razorpay'
 import { getRazorpayCredentials } from '../lib/razorpayCredentials'
+import { sendMetaPurchaseCapiEvent } from '../hooks/metaCapiPurchase'
 
 // Razorpay checkout orders from the Design My Website payment step — a
 // dedicated "Order" record (separate from Leads) that only ever exists once
@@ -97,6 +98,7 @@ export const Orders: CollectionConfig = {
     { name: 'lead', type: 'relationship', relationTo: 'leads', admin: { readOnly: true, description: 'The Lead this checkout belongs to.' } },
   ],
   hooks: {
+    afterChange: [sendMetaPurchaseCapiEvent],
     beforeChange: [
       async ({ data, originalDoc, req, operation, context }) => {
         if (operation !== 'update' || !originalDoc) return data

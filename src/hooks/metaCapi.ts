@@ -47,6 +47,9 @@ export const sendMetaLeadCapiEvent: CollectionAfterChangeHook = ({ doc, operatio
               ...(clientIp ? { client_ip_address: clientIp } : {}),
               ...(userAgent ? { client_user_agent: userAgent } : {}),
             },
+            // The selected industry chip is stored in the Lead's `message`
+            // field (see DesignMyWebsitePage.tsx handleStep2Submit).
+            ...(doc.message ? { custom_data: { industry: doc.message } } : {}),
           },
         ],
         ...(testEventCode ? { test_event_code: testEventCode } : {}),
