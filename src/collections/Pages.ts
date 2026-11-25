@@ -277,7 +277,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'dmwStep2DisclaimerBold',
               type: 'text',
-              defaultValue: 'Get your custom website preview plan',
+              defaultValue: 'Get your custom website plan',
               label: 'Step 2 Disclaimer — Bold Lead-in',
               admin: { description: 'The bold opening phrase of the paragraph shown under the Step 2 button.' },
             },
@@ -285,7 +285,7 @@ export const Pages: CollectionConfig = {
               name: 'dmwStep2DisclaimerRest',
               type: 'textarea',
               defaultValue:
-                "on a temporary link for 1 month in WhatsApp. After your payment confirmation of ₹4,999 INR, we'll purchase your personalised business domain and upload the website for 1 year.",
+                "started. Once your payment of ₹9,999 INR is confirmed, we'll purchase your personalised business domain, build your website, and upload it live for 1 year with free hosting included.",
               label: 'Step 2 Disclaimer — Rest of the Paragraph',
               admin: { description: 'Continues directly after the bold lead-in above, same paragraph.' },
             },
@@ -444,6 +444,24 @@ export const Pages: CollectionConfig = {
             { name: 'dmwAgencyButtonLabel', type: 'text', defaultValue: 'Start your first Website Now' },
             { name: 'dmwAgencyContactLabel', type: 'text', defaultValue: 'Contact us' },
             { name: 'dmwAgencyContactEmail', type: 'text', defaultValue: 'hello@nexovah.com' },
+
+            // Client Reviews — curated from Freelancer.com project reviews.
+            // Price and time-ago are deliberately not stored here (not shown
+            // on the frontend) — just name, flag, rating, title, review text.
+            { name: 'dmwReviewsHeading', type: 'text', defaultValue: 'What Our Clients Say' },
+            { name: 'dmwReviewsSubheading', type: 'text', defaultValue: 'Real reviews from real projects on Freelancer.com' },
+            {
+              name: 'dmwClientReviews',
+              type: 'array',
+              labels: { singular: 'Client Review', plural: 'Client Reviews' },
+              fields: [
+                { name: 'name', type: 'text', required: true },
+                { name: 'countryFlag', type: 'text', admin: { description: 'Flag emoji, e.g. 🇬🇧 — shown next to the name.' } },
+                { name: 'rating', type: 'number', min: 1, max: 5, defaultValue: 5, required: true },
+                { name: 'title', type: 'text', required: true },
+                { name: 'reviewText', type: 'textarea', required: true },
+              ],
+            },
 
             // FAQ
             { name: 'dmwFaqHeading', type: 'text', defaultValue: 'Frequently Asked Questions' },
