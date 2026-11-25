@@ -563,6 +563,21 @@ export interface Page {
   dmwAgencyButtonLabel?: string | null;
   dmwAgencyContactLabel?: string | null;
   dmwAgencyContactEmail?: string | null;
+  dmwReviewsHeading?: string | null;
+  dmwReviewsSubheading?: string | null;
+  dmwClientReviews?:
+    | {
+        name: string;
+        /**
+         * Flag emoji, e.g. 🇬🇧 — shown next to the name.
+         */
+        countryFlag?: string | null;
+        rating: number;
+        title: string;
+        reviewText: string;
+        id?: string | null;
+      }[]
+    | null;
   dmwFaqHeading?: string | null;
   dmwFaqs?:
     | {
@@ -2407,6 +2422,18 @@ export interface PagesSelect<T extends boolean = true> {
   dmwAgencyButtonLabel?: T;
   dmwAgencyContactLabel?: T;
   dmwAgencyContactEmail?: T;
+  dmwReviewsHeading?: T;
+  dmwReviewsSubheading?: T;
+  dmwClientReviews?:
+    | T
+    | {
+        name?: T;
+        countryFlag?: T;
+        rating?: T;
+        title?: T;
+        reviewText?: T;
+        id?: T;
+      };
   dmwFaqHeading?: T;
   dmwFaqs?:
     | T
