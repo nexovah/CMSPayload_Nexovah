@@ -19,7 +19,7 @@
     "graphql": "^16.14.2",
     "next": "^16.2.12",
     "nodemailer": "^10.6.1",
-    "payload": "^3.94.1",
+    "payload": "^3.94.2",
     "razorpay": "^2.9.8",
     "react": "^19.2.8",
     "react-colorful": "^5.8.0",
