@@ -19,6 +19,11 @@ const PLAN_LABELS: Record<'monthly' | 'yearly', string> = {
   yearly: '₹9,999 / 1 Year',
 }
 
+// Same number as Design My Website's dmwWhatsappNumber (digits only, no +)
+// — kept as a constant here since this email sends from the backend, with
+// no access to that page's own CMS content fetch.
+const WHATSAPP_NUMBER = '918100388080'
+
 // Mirrors the Business Builder Plan checklist on the Design My Website page
 // (pages_dmw_pricing_sections_rows) — static here rather than queried live,
 // same tradeoff PLAN_LABELS already makes: if the plan's included features
@@ -86,16 +91,50 @@ function buildOrderHtml(order: OrderLike, template?: { rawHtml?: string | null }
       ${featureRows.join('')}
     </table>`
 
+  const amountPaid = `₹${order.amount.toLocaleString('en-IN')}`
+  const paymentId = order.razorpayPaymentId || '—'
+
+  // Pre-filled with exactly the fields the customer sees above — enough for
+  // support to identify the order instantly on WhatsApp without asking.
+  const whatsappMessage = [
+    `Hi, I just completed my order.`,
+    `Name: ${order.customerName}`,
+    `Order Number: ${order.orderNumber}`,
+    `Plan: ${planLabel}`,
+    `Amount Paid: ${amountPaid}`,
+    `Payment ID: ${paymentId}`,
+    `Purchase Date: ${purchaseDate}`,
+  ].join('\n')
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`
+
+  // Table-based button (not a flex/gradient-dependent <button>) so it
+  // renders consistently across email clients — Outlook/Gmail strip most
+  // CSS, but a solid bgcolor on a <table>/<a> always survives.
+  const whatsappButtonHtml = `
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px; width:100%;">
+      <tr>
+        <td align="center" bgcolor="#00a84c" style="border-radius:10px;">
+          <a href="${whatsappUrl}" target="_blank" style="display:block; padding:16px 24px; font-size:17px; font-weight:700; color:#ffffff; text-decoration:none; font-family:'Helvetica Neue','Segoe UI',Helvetica,sans-serif;">
+            <span style="display:inline-block; vertical-align:middle; margin-right:8px; width:20px; height:20px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.74.46 3.43 1.32 4.92L2.05 22l5.3-1.39a9.9 9.9 0 0 0 4.69 1.19h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.21 0 4.29.86 5.85 2.42a8.23 8.23 0 0 1 2.43 5.82c0 4.55-3.71 8.25-8.27 8.25a8.3 8.3 0 0 1-4.21-1.15l-.3-.18-3.15.83.84-3.07-.2-.32a8.19 8.19 0 0 1-1.26-4.37c0-4.55 3.71-8.23 8.27-8.23Zm-4.3 4.59c-.17 0-.44.06-.67.32-.23.26-.88.86-.88 2.09 0 1.23.9 2.42 1.03 2.59.13.17 1.76 2.8 4.33 3.82 2.14.85 2.58.68 3.04.64.47-.04 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.47-.3-.25-.13-1.5-.74-1.73-.83-.23-.09-.4-.13-.57.13-.17.26-.65.83-.8 1-.15.17-.3.19-.55.06-.25-.13-1.07-.4-2.03-1.26-.75-.67-1.26-1.5-1.4-1.75-.15-.26-.02-.4.11-.52.11-.11.25-.3.38-.44.13-.15.17-.26.26-.43.08-.17.04-.32-.02-.45-.06-.13-.57-1.38-.78-1.9-.21-.5-.42-.43-.57-.44h-.49Z"/></svg>
+            </span>
+            Continue to Chat on WhatsApp
+          </a>
+        </td>
+      </tr>
+    </table>`
+
   const tags: Record<string, string> = {
     customer_name: order.customerName,
     order_number: order.orderNumber,
     plan_label: planLabel,
-    amount_paid: `₹${order.amount.toLocaleString('en-IN')}`,
-    payment_id: order.razorpayPaymentId || '—',
+    amount_paid: amountPaid,
+    payment_id: paymentId,
     purchase_date: purchaseDate,
     expiry_date: expiryDate,
     validity_label: validityLabel,
     features_list: featuresListHtml,
+    whatsapp_button: whatsappButtonHtml,
   }
 
   const fill = (html: string) =>
@@ -163,6 +202,7 @@ function buildOrderHtml(order: OrderLike, template?: { rawHtml?: string | null }
         <p style="margin-top:24px; color:#6b6b6b; font-size:13px;">
           Questions about your order? Reply to this email or reach us on WhatsApp.
         </p>
+        ${whatsappButtonHtml}
       </div>
       <div class="footer">
         Nexovah Technology &middot; <a href="https://nexovah.com">nexovah.com</a>
