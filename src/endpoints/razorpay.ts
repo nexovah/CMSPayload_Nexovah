@@ -10,7 +10,7 @@ import { getRazorpayCredentials } from '../lib/razorpayCredentials'
 // to these defaults if that row is ever missing/misconfigured.
 const PLAN_FALLBACK_AMOUNTS_PAISE: Record<string, number> = {
   monthly: 399 * 100,
-  yearly: 4999 * 100,
+  yearly: 9999 * 100,
 }
 const PLAN_VALIDITY_DAYS: Record<string, number> = {
   monthly: 30,
@@ -49,7 +49,7 @@ function generateOrderNumber(): string {
   const m = String(now.getMonth() + 1).padStart(2, '0')
   const d = String(now.getDate()).padStart(2, '0')
   const rand = Math.floor(1000 + Math.random() * 9000)
-  return `NXV-${y}${m}${d}-${rand}`
+  return `NEXAI-${y}${m}${d}-${rand}`
 }
 
 // POST /api/create-order
@@ -94,6 +94,12 @@ export const createOrderEndpoint: Endpoint = {
         amount: amountPaise,
         currency: 'INR',
         receipt: orderNumber,
+        // The Razorpay account's API keys are shared across multiple
+        // websites (nexovah.com + durgacrm.in) — this note is how an order
+        // is attributed to this site in the Razorpay Dashboard/API/webhook
+        // responses, per Razorpay support's own recommended approach for
+        // one account serving multiple sites.
+        notes: { website: 'nexovah.com' },
       })
 
       await req.payload.create({
