@@ -89,7 +89,7 @@ export const createOrderEndpoint: Endpoint = {
     const orderNumber = generateOrderNumber()
 
     try {
-      const { client } = await razorpayClient(req.payload)
+      const { client, creds } = await razorpayClient(req.payload)
       const razorpayOrder = await client.orders.create({
         amount: amountPaise,
         currency: 'INR',
@@ -122,6 +122,13 @@ export const createOrderEndpoint: Endpoint = {
         amount: razorpayOrder.amount,
         currency: razorpayOrder.currency,
         order_number: orderNumber,
+        // The browser's checkout.js widget must open with the SAME key the
+        // server just used to create this order — a frontend-side static
+        // env var key (the old approach) silently drifts from whichever
+        // mode (Test/Live) the CMS's Payment Gateway toggle is actually
+        // set to, and Razorpay's widget fails with a generic "Something
+        // went wrong" screen when the key and order_id don't match.
+        key_id: creds.key_id,
       })
     } catch (err) {
       req.payload.logger.error(`Razorpay create-order failed: ${err instanceof Error ? err.message : err}`)
