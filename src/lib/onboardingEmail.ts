@@ -13,7 +13,7 @@ function buildOnboardingButtonHtml(url: string, label: string): string {
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px; width:100%;">
       <tr>
         <td align="center" bgcolor="#00D45F" style="border-radius:10px;">
-          <a href="${url}" target="_blank" style="display:block; padding:16px 24px; font-size:17px; font-weight:700; color:#013025; text-decoration:none; font-family:'Helvetica Neue','Segoe UI',Helvetica,sans-serif;">
+          <a href="${url}" target="_blank" style="display:block; padding:13px 16px; font-size:14px; font-weight:700; color:#013025; text-decoration:none; white-space:nowrap; font-family:'Helvetica Neue','Segoe UI',Helvetica,sans-serif;">
             ${label}
           </a>
         </td>

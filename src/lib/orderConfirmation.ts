@@ -114,9 +114,9 @@ function buildOrderHtml(order: OrderLike, template?: { rawHtml?: string | null }
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px; width:100%;">
       <tr>
         <td align="center" bgcolor="#00a84c" style="border-radius:10px;">
-          <a href="${whatsappUrl}" target="_blank" style="display:block; padding:16px 24px; font-size:17px; font-weight:700; color:#ffffff; text-decoration:none; font-family:'Helvetica Neue','Segoe UI',Helvetica,sans-serif;">
-            <span style="display:inline-block; vertical-align:middle; margin-right:8px; width:20px; height:20px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.74.46 3.43 1.32 4.92L2.05 22l5.3-1.39a9.9 9.9 0 0 0 4.69 1.19h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.21 0 4.29.86 5.85 2.42a8.23 8.23 0 0 1 2.43 5.82c0 4.55-3.71 8.25-8.27 8.25a8.3 8.3 0 0 1-4.21-1.15l-.3-.18-3.15.83.84-3.07-.2-.32a8.19 8.19 0 0 1-1.26-4.37c0-4.55 3.71-8.23 8.27-8.23Zm-4.3 4.59c-.17 0-.44.06-.67.32-.23.26-.88.86-.88 2.09 0 1.23.9 2.42 1.03 2.59.13.17 1.76 2.8 4.33 3.82 2.14.85 2.58.68 3.04.64.47-.04 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.47-.3-.25-.13-1.5-.74-1.73-.83-.23-.09-.4-.13-.57.13-.17.26-.65.83-.8 1-.15.17-.3.19-.55.06-.25-.13-1.07-.4-2.03-1.26-.75-.67-1.26-1.5-1.4-1.75-.15-.26-.02-.4.11-.52.11-.11.25-.3.38-.44.13-.15.17-.26.26-.43.08-.17.04-.32-.02-.45-.06-.13-.57-1.38-.78-1.9-.21-.5-.42-.43-.57-.44h-.49Z"/></svg>
+          <a href="${whatsappUrl}" target="_blank" style="display:block; padding:13px 16px; font-size:14px; font-weight:700; color:#ffffff; text-decoration:none; white-space:nowrap; font-family:'Helvetica Neue','Segoe UI',Helvetica,sans-serif;">
+            <span style="display:inline-block; vertical-align:middle; margin-right:6px; width:16px; height:16px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.74.46 3.43 1.32 4.92L2.05 22l5.3-1.39a9.9 9.9 0 0 0 4.69 1.19h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.21 0 4.29.86 5.85 2.42a8.23 8.23 0 0 1 2.43 5.82c0 4.55-3.71 8.25-8.27 8.25a8.3 8.3 0 0 1-4.21-1.15l-.3-.18-3.15.83.84-3.07-.2-.32a8.19 8.19 0 0 1-1.26-4.37c0-4.55 3.71-8.23 8.27-8.23Zm-4.3 4.59c-.17 0-.44.06-.67.32-.23.26-.88.86-.88 2.09 0 1.23.9 2.42 1.03 2.59.13.17 1.76 2.8 4.33 3.82 2.14.85 2.58.68 3.04.64.47-.04 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.47-.3-.25-.13-1.5-.74-1.73-.83-.23-.09-.4-.13-.57.13-.17.26-.65.83-.8 1-.15.17-.3.19-.55.06-.25-.13-1.07-.4-2.03-1.26-.75-.67-1.26-1.5-1.4-1.75-.15-.26-.02-.4.11-.52.11-.11.25-.3.38-.44.13-.15.17-.26.26-.43.08-.17.04-.32-.02-.45-.06-.13-.57-1.38-.78-1.9-.21-.5-.42-.43-.57-.44h-.49Z"/></svg>
             </span>
             Continue to Chat on WhatsApp
           </a>
@@ -152,11 +152,11 @@ function buildOrderHtml(order: OrderLike, template?: { rawHtml?: string | null }
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <style>
       body { background-color: #F0FBF2; font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif; font-size: 15px; line-height: 24px; margin: 0; color: #444; }
-      .outer { max-width: 560px; margin: 0 auto; padding: 24px 16px; }
-      .header { background-color: #0B2A20; border-radius: 12px 12px 0 0; padding: 22px 28px; }
+      .outer { max-width: 560px; margin: 0 auto; padding: 20px 16px; }
+      .header { background-color: #0B2A20; border-radius: 12px 12px 0 0; padding: 22px 24px; }
       .header .wordmark { color: #ffffff; font-size: 18px; font-weight: 700; letter-spacing: 0.3px; }
       .header .accent { color: #00d45f; }
-      .wrap { background-color: #fff; padding: 32px 28px; border-radius: 0 0 12px 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+      .wrap { background-color: #fff; padding: 28px 22px; border-radius: 0 0 12px 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
       h1 { color: #101010; font-size: 21px; margin: 0 0 4px; }
       .subtext { color: #6b6b6b; font-size: 14px; margin: 0 0 20px; }
       table.details { width: 100%; border-collapse: collapse; }
@@ -164,11 +164,17 @@ function buildOrderHtml(order: OrderLike, template?: { rawHtml?: string | null }
       td.label { color: #6b6b6b; width: 45%; }
       td.value { color: #101010; font-weight: 600; text-align: right; }
       .rule { margin-top: 20px; padding: 14px 16px; background: #DFFBEA; border-radius: 10px; font-size: 13.5px; color: #013F32; }
-      .plan-box { margin-top: 28px; border: 1px solid #EDEDED; border-radius: 12px; padding: 18px 20px; background: #FAFFFB; }
+      .plan-box { margin-top: 28px; border: 1px solid #EDEDED; border-radius: 12px; padding: 18px 16px; background: #FAFFFB; }
       .plan-box h2 { margin: 0 0 4px; font-size: 16px; color: #101010; }
       .plan-box .plan-sub { margin: 0; font-size: 13px; color: #6b6b6b; }
       .footer { margin-top: 24px; text-align: center; color: #9A9A9A; font-size: 12px; }
       .footer a { color: #00a84c; text-decoration: none; }
+      @media only screen and (max-width: 600px) {
+        .outer { padding: 10px 2px !important; }
+        .header { padding: 14px 10px !important; }
+        .wrap { padding: 16px 8px !important; }
+        .plan-box { padding: 12px 8px !important; }
+      }
     </style>
   </head>
   <body>
