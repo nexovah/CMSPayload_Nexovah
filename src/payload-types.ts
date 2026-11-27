@@ -138,6 +138,7 @@ export interface Config {
     'n8n-settings': N8NSetting;
     'expiry-reminders': ExpiryReminder;
     'payment-gateway': PaymentGateway;
+    'onboarding-email': OnboardingEmail;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
@@ -145,6 +146,7 @@ export interface Config {
     'n8n-settings': N8NSettingsSelect<false> | N8NSettingsSelect<true>;
     'expiry-reminders': ExpiryRemindersSelect<false> | ExpiryRemindersSelect<true>;
     'payment-gateway': PaymentGatewaySelect<false> | PaymentGatewaySelect<true>;
+    'onboarding-email': OnboardingEmailSelect<false> | OnboardingEmailSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1636,6 +1638,10 @@ export interface Order {
    * The Lead this checkout belongs to.
    */
   lead?: (number | null) | Lead;
+  /**
+   * Set once the post-purchase onboarding email (see Sales → Onboarding Email) has gone out — prevents it from ever being sent twice for the same order.
+   */
+  onboardingEmailSentAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3157,6 +3163,7 @@ export interface OrdersSelect<T extends boolean = true> {
   validityDays?: T;
   expiryDate?: T;
   lead?: T;
+  onboardingEmailSentAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -4229,6 +4236,32 @@ export interface PaymentGateway {
   createdAt?: string | null;
 }
 /**
+ * Sent automatically a fixed delay after a paid order's confirmation email, asking the customer to fill the business onboarding form. Content/layout is edited on the selected Email Template below — this page only holds the form link, button text, subject and timing.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "onboarding-email".
+ */
+export interface OnboardingEmail {
+  id: number;
+  enabled?: boolean | null;
+  /**
+   * How long after the order confirmation email this one goes out. Checked every 60 seconds, so actual timing can run up to a minute later than this value.
+   */
+  delaySeconds?: number | null;
+  template?: (number | null) | CampaignTemplate;
+  subject?: string | null;
+  /**
+   * The Google Form (or any form) link the button opens. Available in the template as {{onboarding_form_url}}.
+   */
+  onboardingFormUrl?: string | null;
+  /**
+   * Available in the template as {{onboarding_button}} (renders the full button, not just this text).
+   */
+  buttonLabel?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -4676,6 +4709,21 @@ export interface PaymentGatewaySelect<T extends boolean = true> {
         keySecret?: T;
         webhookSecret?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "onboarding-email_select".
+ */
+export interface OnboardingEmailSelect<T extends boolean = true> {
+  enabled?: T;
+  delaySeconds?: T;
+  template?: T;
+  subject?: T;
+  onboardingFormUrl?: T;
+  buttonLabel?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

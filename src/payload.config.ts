@@ -31,9 +31,11 @@ import { AppSettings } from './globals/AppSettings'
 import { N8NSettings } from './globals/N8NSettings'
 import { ExpiryReminders } from './globals/ExpiryReminders'
 import { PaymentGateway } from './globals/PaymentGateway'
+import { OnboardingEmail } from './globals/OnboardingEmail'
 import { runDueScheduledCampaigns, resumeDailyLimitPausedCampaigns } from './lib/campaignSend'
 import { runDueAutomationSteps } from './lib/automationSend'
 import { runDueExpiryReminders } from './lib/expiryReminders'
+import { runDueOnboardingEmails } from './lib/onboardingEmail'
 import { createOrderEndpoint, verifyPaymentEndpoint } from './endpoints/razorpay'
 import { razorpayWebhookEndpoint } from './endpoints/razorpayWebhook'
 
@@ -41,6 +43,7 @@ const SCHEDULED_CAMPAIGN_CHECK_INTERVAL_MS = 60_000
 const AUTOMATION_STEP_CHECK_INTERVAL_MS = 60_000
 const DAILY_LIMIT_RESUME_CHECK_INTERVAL_MS = 60_000
 const EXPIRY_REMINDER_CHECK_INTERVAL_MS = 60_000
+const ONBOARDING_EMAIL_CHECK_INTERVAL_MS = 60_000
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -74,7 +77,7 @@ export default buildConfig({
     Categories,
     Redirects,
   ],
-  globals: [SiteSettings, AppSettings, N8NSettings, ExpiryReminders, PaymentGateway],
+  globals: [SiteSettings, AppSettings, N8NSettings, ExpiryReminders, PaymentGateway, OnboardingEmail],
   endpoints: [createOrderEndpoint, verifyPaymentEndpoint, razorpayWebhookEndpoint],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -130,5 +133,12 @@ export default buildConfig({
     setInterval(() => {
       runDueExpiryReminders(payload).catch((err) => payload.logger.error(`Expiry reminder check failed: ${err instanceof Error ? err.message : err}`))
     }, EXPIRY_REMINDER_CHECK_INTERVAL_MS)
+
+    // Polls paid Orders for the post-purchase onboarding email — sent once,
+    // a fixed delay (default 60s) after the order confirmation email. Same
+    // in-process caveat as the others above.
+    setInterval(() => {
+      runDueOnboardingEmails(payload).catch((err) => payload.logger.error(`Onboarding email check failed: ${err instanceof Error ? err.message : err}`))
+    }, ONBOARDING_EMAIL_CHECK_INTERVAL_MS)
   },
 })

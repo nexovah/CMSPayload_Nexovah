@@ -96,6 +96,11 @@ export const Orders: CollectionConfig = {
       admin: { readOnly: true, description: 'purchaseDate + validityDays, computed automatically.' },
     },
     { name: 'lead', type: 'relationship', relationTo: 'leads', admin: { readOnly: true, description: 'The Lead this checkout belongs to.' } },
+    {
+      name: 'onboardingEmailSentAt',
+      type: 'date',
+      admin: { readOnly: true, description: 'Set once the post-purchase onboarding email (see Sales → Onboarding Email) has gone out — prevents it from ever being sent twice for the same order.' },
+    },
   ],
   hooks: {
     afterChange: [sendMetaPurchaseCapiEvent],
